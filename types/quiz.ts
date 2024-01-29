@@ -1,7 +1,7 @@
 export enum Difficulty {
-  EASY = 'easy',
-  MEDIUM = 'medium',
-  HARD = 'hard'
+  EASY = "easy",
+  MEDIUM = "medium",
+  HARD = "hard",
 }
 
 export type Question = {
@@ -14,3 +14,9 @@ export type Question = {
 };
 
 export type QuestionsState = Array<Question & { answers: Array<string> }>;
+
+export type Token = {
+  response_code: number;
+  response_message: string;
+  token: string;
+};

@@ -43,10 +43,9 @@ const Quiz = ({ questions, totalQuestions }: Props) => {
     router.push("/");
   };
 
-  console.log(questions);
   return (
-    <div className="w-[600px] p-[30px] rounded-3xl bg-slate-200 my-8 mx-auto">
-      <p className="p-8 font-bold text-[20px]">Score: {score}</p>
+    <div className="w-full max-w-lg p-[30px] rounded-3xl bg-slate-200 my-8 mx-auto">
+      <p className="font-bold text-[20px]">Score: {score}</p>
       <p className="pb-2 font-bold text-base text-[##243c5a]">
         Question {currentQuestionIndex} out of {totalQuestions}
       </p>
@@ -58,9 +57,14 @@ const Quiz = ({ questions, totalQuestions }: Props) => {
         correctAnswer={questions[currentQuestionIndex].correct_answer}
         onClick={handleOnAnswerClick}
       />
-      <div className="w-max-[600px]">
-        <Button text="Prev" onClick={() => handleChangeQuestion(-1)} />
+      <div className="w-max-[600px] flex justify-between items-center">
         <Button
+          size="sm:text-lg"
+          text="Prev"
+          onClick={() => handleChangeQuestion(-1)}
+        />
+        <Button
+          size="sm:text-lg"
           text={lastQuestion ? "End" : "Next"}
           onClick={
             lastQuestion

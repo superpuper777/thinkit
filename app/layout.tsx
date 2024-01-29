@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={quickSand.className}>
-        <main className="sm:px-20 sm:py-12 px-8 py-2">
+        <main className="min-h-screen w-full sm:px-20 sm:py-12 px-8 py-2">
           <header className="flex flex-col items-center">
             <Image
               className="sm:h-48 sm:w-48 h-28 w-28 rounded-full"

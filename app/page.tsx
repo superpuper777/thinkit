@@ -10,7 +10,7 @@ export default function Home() {
   const handleButtonClick = () => router.push("/quiz");
 
   return (
-    <main className="flex min-h-screen flex-col gap-6 items-center mt-10">
+    <div className="flex flex-col gap-6 items-center mt-10">
       <p className="sm:text-2xl font-semibold text-sm">
         Do you have what it takes to become the ThinkIt-Quiz master?
       </p>
@@ -19,7 +19,11 @@ export default function Home() {
         src={HomePic}
         alt="picture"
       />
-      <Button text={"Start Quiz"} onClick={handleButtonClick}></Button>
-    </main>
+      <Button
+        text={"Start Quiz"}
+        onClick={handleButtonClick}
+        size="sm:text-3xl"
+      ></Button>
+    </div>
   );
 }

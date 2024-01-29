@@ -1,15 +1,16 @@
 import { shuffleArray } from "@/utils/arrayUtils";
 import Quiz from "./Quiz";
-import { Difficulty, QuestionsState, Question } from "@/types/quiz";
+import { Difficulty, QuestionsState, Question, Token } from "@/types/quiz";
 
 const TOTAL_QUESTIONS = 10;
 
 const getQuestions = async (
   amount: number,
-  difficulty: Difficulty
+  difficulty: Difficulty,
+  token: string
 ): Promise<QuestionsState> => {
   const getData = async () => {
-    const endpoint = `https://opentdb.com/api.php?amount=${amount}&difficulty=${difficulty}&type=multiple`;
+    const endpoint = `https://opentdb.com/api.php?amount=${amount}&difficulty=${difficulty}&type=multiple&token=${token}`;
     const res = await fetch(endpoint, { cache: "no-store" });
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -28,8 +29,20 @@ const getQuestions = async (
   }));
 };
 
+const getToken = async (): Promise<Token> => {
+  const endpoint = `https://opentdb.com/api_token.php?command=request`;
+  const res = await fetch(endpoint);
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+};
+
 const QuizPage = async () => {
-  const questions = await getQuestions(TOTAL_QUESTIONS, Difficulty.EASY);
+  const { token } = await getToken();
+  console.log(token);
+  const questions = await getQuestions(TOTAL_QUESTIONS, Difficulty.EASY, token);
   return <Quiz questions={questions} totalQuestions={TOTAL_QUESTIONS} />;
 };
 
