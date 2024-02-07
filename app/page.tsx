@@ -5,11 +5,15 @@ import { useRouter } from "next/navigation";
 import HomePic from "@/assets/brain.jpg";
 // import Modal from "@/components/Modal/Modal";
 
+import { getToken } from "./actions";
+
 export default function Home() {
   const router = useRouter();
 
-  const handleButtonClick = () => router.push("/quiz");
-
+  const handleButtonClick = async () => {
+    await getToken();
+    router.push("/quiz");
+  };
   return (
     <div className="flex flex-col gap-6 items-center mt-10">
       <p className="sm:text-2xl font-semibold text-sm">

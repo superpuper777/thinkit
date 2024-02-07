@@ -10,6 +10,7 @@ const getQuestions = async (
   token: string
 ): Promise<QuestionsState> => {
   const getData = async () => {
+    console.log("token", token);
     const endpoint = `https://opentdb.com/api.php?amount=${amount}&difficulty=${difficulty}&type=multiple&token=${token}`;
     const res = await fetch(endpoint, { cache: "no-store" });
     if (!res.ok) {
@@ -31,7 +32,7 @@ const getQuestions = async (
 
 const getToken = async (): Promise<Token> => {
   const endpoint = `https://opentdb.com/api_token.php?command=request`;
-  const res = await fetch(endpoint);
+  const res = await fetch(endpoint, { cache: "no-store" });
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
@@ -43,7 +44,14 @@ const QuizPage = async () => {
   const { token } = await getToken();
   console.log(token);
   const questions = await getQuestions(TOTAL_QUESTIONS, Difficulty.EASY, token);
-  return <Quiz questions={questions} totalQuestions={TOTAL_QUESTIONS} />;
+  console.log(questions);
+  return (
+    <Quiz
+      questions={questions}
+      totalQuestions={TOTAL_QUESTIONS}
+      currentToken={token}
+    />
+  );
 };
 
 export default QuizPage;

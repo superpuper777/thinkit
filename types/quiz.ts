@@ -13,6 +13,11 @@ export type Question = {
   type: string;
 };
 
+export type QuestionsResponse = {
+  results: Array<Question>;
+  response_code: number;
+};
+
 export type QuestionsState = Array<Question & { answers: Array<string> }>;
 
 export type Token = {

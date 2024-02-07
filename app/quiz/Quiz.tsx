@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { resetToken } from "@/app/actions";
 import QuestionCard from "@/components/QuestionCard/QuestionCard";
 import Button from "@/components/Button/Button";
 
@@ -10,9 +11,10 @@ import { QuestionsState } from "@/types/quiz";
 type Props = {
   questions: QuestionsState;
   totalQuestions: number;
+  currentToken: string;
 };
 
-const Quiz = ({ questions, totalQuestions }: Props) => {
+const Quiz = ({ questions, totalQuestions, currentToken }: Props) => {
   const router = useRouter();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -39,7 +41,8 @@ const Quiz = ({ questions, totalQuestions }: Props) => {
     setCurrentQuestionIndex(newQuestionIndex);
   };
 
-  const handleFinishGame = () => {
+  const handleFinishGame = async () => {
+    await resetToken(currentToken);
     router.push("/");
   };
 
@@ -47,14 +50,14 @@ const Quiz = ({ questions, totalQuestions }: Props) => {
     <div className="w-full max-w-lg p-[30px] rounded-3xl bg-slate-200 my-8 mx-auto">
       <p className="font-bold text-[20px]">Score: {score}</p>
       <p className="pb-2 font-bold text-base text-[##243c5a]">
-        Question {currentQuestionIndex} out of {totalQuestions}
+        Question {currentQuestionIndex + 1} out of {totalQuestions}
       </p>
       <QuestionCard
         currentQuestionIndex={currentQuestionIndex}
-        question={questions[currentQuestionIndex].question}
-        answers={questions[currentQuestionIndex].answers}
+        question={questions[currentQuestionIndex]?.question}
+        answers={questions[currentQuestionIndex]?.answers}
         userAnswer={usersAnswers[currentQuestionIndex]}
-        correctAnswer={questions[currentQuestionIndex].correct_answer}
+        correctAnswer={questions[currentQuestionIndex]?.correct_answer}
         onClick={handleOnAnswerClick}
       />
       <div className="w-max-[600px] flex justify-between items-center">

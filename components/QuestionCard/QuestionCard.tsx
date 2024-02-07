@@ -26,7 +26,7 @@ const QuestionCard = ({
         dangerouslySetInnerHTML={{ __html: question }}
       />
       <div className="flex flex-col pt-8 gap-3">
-        {answers.map((answer) => (
+        {answers?.map((answer) => (
           <div
             key={answer}
             onClick={() => onClick(answer, currentQuestionIndex)}
