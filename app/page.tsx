@@ -3,6 +3,7 @@ import Image from "next/image";
 import Button from "@/components/Button/Button";
 import { useRouter } from "next/navigation";
 import HomePic from "@/assets/brain.jpg";
+// import Modal from "@/components/Modal/Modal";
 
 export default function Home() {
   const router = useRouter();
@@ -24,6 +25,11 @@ export default function Home() {
         onClick={handleButtonClick}
         size="sm:text-3xl"
       ></Button>
+      {/* <Modal
+        title={"Asdasd"}
+        question={"asdfasfasfasfsafsa?"}
+        text="sdfsdfsdf"
+      /> */}
     </div>
   );
 }
