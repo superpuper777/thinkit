@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { resetToken } from "@/app/actions";
 import QuestionCard from "@/components/QuestionCard/QuestionCard";
 import Button from "@/components/Button/Button";
+import { TERipple } from "tw-elements-react";
 
 import { QuestionsState } from "@/types/quiz";
+import Modal from "@/components/Modal/Modal";
 
 type Props = {
   questions: QuestionsState;
@@ -15,10 +15,10 @@ type Props = {
 };
 
 const Quiz = ({ questions, totalQuestions, currentToken }: Props) => {
-  const router = useRouter();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [usersAnswers, setUserAnswers] = useState<Record<number, string>>({});
+  const [showModal, setShowModal] = useState(false);
   // or const [state, dispatch] = useReducer(reducer, {});
 
   const isQuestionAnswered = usersAnswers[currentQuestionIndex] ? true : false;
@@ -41,9 +41,8 @@ const Quiz = ({ questions, totalQuestions, currentToken }: Props) => {
     setCurrentQuestionIndex(newQuestionIndex);
   };
 
-  const handleFinishGame = async () => {
-    await resetToken(currentToken);
-    router.push("/");
+  const handleShowModal = async () => {
+    setShowModal(true);
   };
 
   return (
@@ -61,21 +60,32 @@ const Quiz = ({ questions, totalQuestions, currentToken }: Props) => {
         onClick={handleOnAnswerClick}
       />
       <div className="w-max-[600px] flex justify-between items-center">
-        <Button
-          size="sm:text-lg"
-          text="Prev"
-          onClick={() => handleChangeQuestion(-1)}
-        />
-        <Button
-          size="sm:text-lg"
-          text={lastQuestion ? "End" : "Next"}
-          onClick={
-            lastQuestion
-              ? () => handleFinishGame()
-              : () => handleChangeQuestion(1)
-          }
-        />
+        <TERipple rippleColor="white">
+          <Button
+            size="sm:text-lg"
+            text="Prev"
+            onClick={() => handleChangeQuestion(-1)}
+            disabled={currentQuestionIndex === 0}
+          />
+        </TERipple>
+        <TERipple rippleColor="white">
+          <Button
+            size="sm:text-lg"
+            text={lastQuestion ? "End" : "Next"}
+            onClick={
+              lastQuestion
+                ? () => handleShowModal()
+                : () => handleChangeQuestion(1)
+            }
+          />
+        </TERipple>
       </div>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        currentToken={currentToken}
+        setCurrentQuestionIndex={setCurrentQuestionIndex}
+      />
     </div>
   );
 };

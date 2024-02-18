@@ -6,6 +6,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/tw-elements/dist/js/**/*.js",
+    "./node_modules/tw-elements-react/dist/js/**/*.js",
   ],
   theme: {
     fontSize: {
