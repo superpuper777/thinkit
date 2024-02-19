@@ -6,6 +6,7 @@ import HomePic from "@/assets/brain.jpg";
 // import Modal from "@/components/Modal/Modal";
 
 import { getToken } from "./actions";
+import DropDown from "@/components/DropDown/DropDown";
 
 export default function Home() {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function Home() {
       <p className="sm:text-2xl font-semibold text-sm">
         Do you have what it takes to become the ThinkIt-Quiz master?
       </p>
+      <DropDown />
       <Image
         className="max-w-[700px] w-full rounded-lg"
         src={HomePic}

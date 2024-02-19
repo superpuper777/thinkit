@@ -7,6 +7,7 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/tw-elements/dist/js/**/*.js",
     "./node_modules/tw-elements-react/dist/js/**/*.js",
+    "./node_modules/react-tailwindcss-select/dist/index.esm.js",
   ],
   theme: {
     fontSize: {

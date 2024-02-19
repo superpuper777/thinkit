@@ -25,3 +25,12 @@ export type Token = {
   response_message: string;
   token: string;
 };
+
+export type Category = {
+  id: number;
+  name: string;
+};
+
+export type Categories = {
+  trivia_categories: Array<Category>;
+};
