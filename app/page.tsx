@@ -1,41 +1,23 @@
-"use client";
-import Image from "next/image";
-import Button from "@/components/Button/Button";
-import { useRouter } from "next/navigation";
-import HomePic from "@/assets/brain.jpg";
-// import Modal from "@/components/Modal/Modal";
-
+import { Categories } from "@/types/quiz";
+import Home from "./Home";
 import { getToken } from "./actions";
-import DropDown from "@/components/DropDown/DropDown";
+// import { tokenStore } from "./store/token";
+// import { getToken } from "./actions";
 
-export default function Home() {
-  const router = useRouter();
+const getCategories = async (): Promise<Categories> => {
+  const endpoint = `https://opentdb.com/api_category.php`;
+  const res = await fetch(endpoint);
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
 
-  const handleButtonClick = async () => {
-    await getToken();
-    router.push("/quiz");
-  };
-  return (
-    <div className="flex flex-col gap-6 items-center mt-10">
-      <p className="sm:text-2xl font-semibold text-sm">
-        Do you have what it takes to become the ThinkIt-Quiz master?
-      </p>
-      <DropDown />
-      <Image
-        className="max-w-[700px] w-full rounded-lg"
-        src={HomePic}
-        alt="picture"
-      />
-      <Button
-        text={"Start Quiz"}
-        onClick={handleButtonClick}
-        size="sm:text-3xl"
-      ></Button>
-      {/* <Modal
-        title={"Asdasd"}
-        question={"asdfasfasfasfsafsa?"}
-        text="sdfsdfsdf"
-      /> */}
-    </div>
-  );
-}
+  return res.json();
+};
+
+const HomePage = async () => {
+  const token = (await getToken()).token;
+  const { trivia_categories } = await getCategories();
+  return <Home categories={trivia_categories} token={token} />;
+};
+
+export default HomePage;

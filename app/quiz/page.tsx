@@ -1,57 +1,113 @@
-import { shuffleArray } from "@/utils/arrayUtils";
-import Quiz from "./Quiz";
-import { Difficulty, QuestionsState, Question, Token } from "@/types/quiz";
+"use client";
 
-const TOTAL_QUESTIONS = 10;
+import React, { useEffect, useState } from "react";
+import QuestionCard from "@/components/QuestionCard/QuestionCard";
+import Button from "@/components/Button/Button";
+import { TERipple } from "tw-elements-react";
 
-const getQuestions = async (
-  amount: number,
-  difficulty: Difficulty,
-  token: string
-): Promise<QuestionsState> => {
-  const getData = async () => {
-    console.log("token", token);
-    const endpoint = `https://opentdb.com/api.php?amount=${amount}&difficulty=${difficulty}&type=multiple&token=${token}`;
-    const res = await fetch(endpoint, { cache: "no-store" });
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
+import { QuestionsState } from "@/types/quiz";
+import Modal from "@/components/Modal/Modal";
+import { categoryStore } from "../store/category";
+import { getQuestions } from "../actions";
+import { difficultyStore } from "../store/difficulty";
+import { tokenStore } from "../store/token";
 
-    return res.json();
+// type Props = {
+//   questions: QuestionsState;
+//   totalQuestions: number;
+//   currentToken: string;
+// };
+
+// const Quiz = ({ questions, totalQuestions, currentToken }: Props) => {
+const Quiz = () => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [score, setScore] = useState(0);
+  const [usersAnswers, setUserAnswers] = useState<Record<number, string>>({});
+  const [showModal, setShowModal] = useState(false);
+  // or const [state, dispatch] = useReducer(reducer, {});
+  const category = categoryStore.getState().category.value;
+  const difficulty = difficultyStore.getState().difficulty.value;
+  const token = tokenStore.getState().token;
+  const [questions, setQuestions] = useState<QuestionsState>([]);
+  const totalQuestions = 10;
+  console.log(category, difficulty, token);
+  const isQuestionAnswered = usersAnswers[currentQuestionIndex] ? true : false;
+
+  const lastQuestion = currentQuestionIndex === totalQuestions - 1;
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      const data = await getQuestions("10", difficulty, category, token);
+      console.log(data);
+      setQuestions(data);
+    };
+    fetchQuestions().catch(console.error);
+  }, [difficulty, category, token]);
+
+  const handleOnAnswerClick = (
+    answer: string,
+    currentQuestionIndex: number
+  ) => {
+    if (isQuestionAnswered) return;
+    const isCorrect = questions[currentQuestionIndex].correct_answer === answer;
+    if (isCorrect) setScore((prev) => prev + 1);
+    setUserAnswers((prev) => ({ ...prev, [currentQuestionIndex]: answer }));
   };
 
-  const data: { results: Array<Question> } = await getData();
-  return data.results.map((question) => ({
-    ...question,
-    answers: shuffleArray([
-      ...question.incorrect_answers,
-      question.correct_answer,
-    ]),
-  }));
-};
+  const handleChangeQuestion = (step: number) => {
+    const newQuestionIndex = currentQuestionIndex + step;
+    if (newQuestionIndex < 0 || newQuestionIndex >= totalQuestions) return;
+    setCurrentQuestionIndex(newQuestionIndex);
+  };
 
-const getToken = async (): Promise<Token> => {
-  const endpoint = `https://opentdb.com/api_token.php?command=request`;
-  const res = await fetch(endpoint, { cache: "no-store" });
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
+  const handleShowModal = async () => {
+    setShowModal(true);
+  };
 
-  return res.json();
-};
-
-const QuizPage = async () => {
-  const { token } = await getToken();
-  console.log(token);
-  const questions = await getQuestions(TOTAL_QUESTIONS, Difficulty.EASY, token);
-  console.log(questions);
   return (
-    <Quiz
-      questions={questions}
-      totalQuestions={TOTAL_QUESTIONS}
-      currentToken={token}
-    />
+    <div className="w-full max-w-lg p-[30px] rounded-3xl bg-slate-200 my-8 mx-auto">
+      <p className="font-bold text-[20px]">Score: {score}</p>
+      <p className="pb-2 font-bold text-base text-[##243c5a]">
+        Question {currentQuestionIndex + 1} out of {totalQuestions}
+      </p>
+      <QuestionCard
+        currentQuestionIndex={currentQuestionIndex}
+        question={questions[currentQuestionIndex]?.question}
+        answers={questions[currentQuestionIndex]?.answers}
+        userAnswer={usersAnswers[currentQuestionIndex]}
+        correctAnswer={questions[currentQuestionIndex]?.correct_answer}
+        onClick={handleOnAnswerClick}
+      />
+      <div className="w-max-[600px] flex justify-between items-center">
+        <TERipple rippleColor="white">
+          <Button
+            size="sm:text-lg"
+            text="Prev"
+            onClick={() => handleChangeQuestion(-1)}
+            disabled={currentQuestionIndex === 0}
+          />
+        </TERipple>
+        <TERipple rippleColor="white">
+          <Button
+            size="sm:text-lg"
+            text={lastQuestion ? "End" : "Next"}
+            onClick={
+              lastQuestion
+                ? () => handleShowModal()
+                : () => handleChangeQuestion(1)
+            }
+          />
+        </TERipple>
+      </div>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        // currentToken={currentToken}
+        currentToken={token}
+        setCurrentQuestionIndex={setCurrentQuestionIndex}
+      />
+    </div>
   );
 };
 
-export default QuizPage;
+export default Quiz;

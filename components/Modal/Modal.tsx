@@ -35,6 +35,7 @@ export default function Modal({
   const handleFinishGame = async () => {
     await resetToken(currentToken);
     router.push("/");
+    router.refresh();
   };
 
   return (

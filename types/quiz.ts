@@ -31,6 +31,11 @@ export type Category = {
   name: string;
 };
 
+export type FormattedOption = {
+  value: string;
+  label: string;
+};
+
 export type Categories = {
   trivia_categories: Array<Category>;
 };
