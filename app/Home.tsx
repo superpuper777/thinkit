@@ -14,15 +14,13 @@ import { useState } from "react";
 import { difficultyStore } from "./store/difficulty";
 import { categoryStore } from "./store/category";
 import { tokenStore } from "./store/token";
-// import { tokenStore } from "./store/token";
-// import { getToken } from "./actions";
+import { getToken } from "./actions";
 
 type Props = {
   categories: Array<Category>;
-  token: string;
 };
 
-export default function Home({ categories, token }: Props) {
+export default function Home({ categories }: Props) {
   const router = useRouter();
   const formattedCategories = categories.map((el) => formattedObject(el));
 
@@ -43,18 +41,18 @@ export default function Home({ categories, token }: Props) {
   );
 
   const handleButtonClick = async () => {
+    const { token } = await getToken();
     saveToken(token);
+    console.log(token);
     router.push("/quiz");
   };
 
   const handleCategoryChange = (value: SelectValue) => {
-    console.log(value);
     setCategory(value);
     changeCurrentCategory(value);
   };
 
   const handleDifficultyChange = (value: SelectValue) => {
-    console.log(value);
     setDifficulty(value);
     changeCurrentDifficulty(value);
   };

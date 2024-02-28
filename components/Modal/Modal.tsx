@@ -10,32 +10,42 @@ import {
   TEModalFooter,
 } from "tw-elements-react";
 
-import { resetToken } from "@/app/actions";
+import { getQuestions, resetToken } from "@/app/actions";
+import { QuestionsState } from "@/types/quiz";
+import { difficulty, category, token } from "@/app/store/states";
 
 type Props = {
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
   currentToken: string;
   setCurrentQuestionIndex: Dispatch<SetStateAction<number>>;
+  setQuestions: Dispatch<SetStateAction<QuestionsState>>;
 };
 
 export default function Modal({
   showModal,
   setShowModal,
-  currentToken,
   setCurrentQuestionIndex,
+  setQuestions,
 }: Props): JSX.Element {
   const router = useRouter();
-  const handleCountinueGame = () => {
-    router.refresh();
+  const totalQuestions = 10;
+
+  const handleCountinueGame = async () => {
+    const data = await getQuestions(
+      totalQuestions,
+      difficulty,
+      category,
+      token
+    );
+    setQuestions(data);
     setCurrentQuestionIndex(0);
     setShowModal(false);
   };
 
   const handleFinishGame = async () => {
-    await resetToken(currentToken);
+    await resetToken(token);
     router.push("/");
-    router.refresh();
   };
 
   return (

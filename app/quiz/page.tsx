@@ -5,29 +5,16 @@ import QuestionCard from "@/components/QuestionCard/QuestionCard";
 import Button from "@/components/Button/Button";
 import { TERipple } from "tw-elements-react";
 
+import { difficulty, category, token } from "@/app/store/states";
 import { QuestionsState } from "@/types/quiz";
 import Modal from "@/components/Modal/Modal";
-import { categoryStore } from "../store/category";
 import { getQuestions } from "../actions";
-import { difficultyStore } from "../store/difficulty";
-import { tokenStore } from "../store/token";
 
-// type Props = {
-//   questions: QuestionsState;
-//   totalQuestions: number;
-//   currentToken: string;
-// };
-
-// const Quiz = ({ questions, totalQuestions, currentToken }: Props) => {
 const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [usersAnswers, setUserAnswers] = useState<Record<number, string>>({});
   const [showModal, setShowModal] = useState(false);
-  // or const [state, dispatch] = useReducer(reducer, {});
-  const category = categoryStore.getState().category.value;
-  const difficulty = difficultyStore.getState().difficulty.value;
-  const token = tokenStore.getState().token;
   const [questions, setQuestions] = useState<QuestionsState>([]);
   const totalQuestions = 10;
   console.log(category, difficulty, token);
@@ -37,12 +24,17 @@ const Quiz = () => {
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      const data = await getQuestions("10", difficulty, category, token);
+      const data = await getQuestions(
+        totalQuestions,
+        difficulty,
+        category,
+        token
+      );
       console.log(data);
       setQuestions(data);
     };
     fetchQuestions().catch(console.error);
-  }, [difficulty, category, token]);
+  }, []);
 
   const handleOnAnswerClick = (
     answer: string,
@@ -102,9 +94,9 @@ const Quiz = () => {
       <Modal
         showModal={showModal}
         setShowModal={setShowModal}
-        // currentToken={currentToken}
         currentToken={token}
         setCurrentQuestionIndex={setCurrentQuestionIndex}
+        setQuestions={setQuestions}
       />
     </div>
   );
