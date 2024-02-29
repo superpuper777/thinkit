@@ -97,6 +97,7 @@ const Quiz = () => {
         currentToken={token}
         setCurrentQuestionIndex={setCurrentQuestionIndex}
         setQuestions={setQuestions}
+        setUserAnswers={setUserAnswers}
       />
     </div>
   );

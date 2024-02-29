@@ -20,6 +20,7 @@ type Props = {
   currentToken: string;
   setCurrentQuestionIndex: Dispatch<SetStateAction<number>>;
   setQuestions: Dispatch<SetStateAction<QuestionsState>>;
+  setUserAnswers: Dispatch<SetStateAction<Record<number, string>>>;
 };
 
 export default function Modal({
@@ -27,6 +28,7 @@ export default function Modal({
   setShowModal,
   setCurrentQuestionIndex,
   setQuestions,
+  setUserAnswers,
 }: Props): JSX.Element {
   const router = useRouter();
   const totalQuestions = 10;
@@ -38,6 +40,8 @@ export default function Modal({
       category,
       token
     );
+
+    setUserAnswers({});
     setQuestions(data);
     setCurrentQuestionIndex(0);
     setShowModal(false);
