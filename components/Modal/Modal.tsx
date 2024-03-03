@@ -1,5 +1,4 @@
 import React, { SetStateAction, Dispatch } from "react";
-import { useRouter } from "next/navigation";
 import {
   TERipple,
   TEModal,
@@ -10,9 +9,10 @@ import {
   TEModalFooter,
 } from "tw-elements-react";
 
-import { getQuestions, resetToken } from "@/app/actions";
+import { getQuestions } from "@/app/actions";
 import { QuestionsState } from "@/types/quiz";
 import { difficulty, category, token } from "@/app/store/states";
+import FinishButton from "../FinishButton/FinishButton";
 
 type Props = {
   showModal: boolean;
@@ -30,7 +30,6 @@ export default function Modal({
   setQuestions,
   setUserAnswers,
 }: Props): JSX.Element {
-  const router = useRouter();
   const totalQuestions = 10;
 
   const handleCountinueGame = async () => {
@@ -42,14 +41,9 @@ export default function Modal({
     );
 
     setUserAnswers({});
-    setQuestions(data);
+    setQuestions(data.results);
     setCurrentQuestionIndex(0);
     setShowModal(false);
-  };
-
-  const handleFinishGame = async () => {
-    await resetToken(token);
-    router.push("/");
   };
 
   return (
@@ -89,34 +83,17 @@ export default function Modal({
                 game right now. Make a choice!
               </p>
             </TEModalBody>
-            <TEModalFooter>
-              <TERipple rippleColor="light">
-                <button
-                  type="button"
-                  className="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
-                  onClick={() => setShowModal(false)}
-                >
-                  Close
-                </button>
-              </TERipple>
-              <TERipple rippleColor="light">
+            <TEModalFooter className="flex gap-5">
+              <TERipple rippleColor="white">
                 <button
                   onClick={handleCountinueGame}
                   type="button"
-                  className="ml-1 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                  className={`text-slate-900 font-medium uppercase select-none bg-[#46b5d4] sm:py-2 sm:px-8 py-2 px-4 rounded-md disabled:opacity-60 disabled:pointer-events-none shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-[#378ca3] active:bg-[#9694aa]`}
                 >
                   Countinue Game
                 </button>
               </TERipple>
-              <TERipple rippleColor="light">
-                <button
-                  onClick={handleFinishGame}
-                  type="button"
-                  className="ml-1 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-                >
-                  Finish Game
-                </button>
-              </TERipple>
+              <FinishButton token={token} />
             </TEModalFooter>
           </TEModalContent>
         </TEModalDialog>

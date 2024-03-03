@@ -61,16 +61,21 @@ export default function Home({ categories }: Props) {
       <p className="sm:text-2xl font-semibold text-sm">
         Do you have what it takes to become the ThinkIt-Quiz master?
       </p>
-      <DropDown
-        options={formattedCategories}
-        value={category}
-        onChange={handleCategoryChange}
-      />
-      <DropDown
-        options={difficulties}
-        value={difficulty}
-        onChange={handleDifficultyChange}
-      />
+      <div className="w-full max-w-80 flex flex-col gap-4">
+        <DropDown
+          options={[
+            { value: "", label: "Any Category" },
+            ...formattedCategories,
+          ]}
+          value={category}
+          onChange={handleCategoryChange}
+        />
+        <DropDown
+          options={difficulties}
+          value={difficulty}
+          onChange={handleDifficultyChange}
+        />
+      </div>
       <Image
         className="max-w-[700px] w-full rounded-lg"
         src={HomePic}

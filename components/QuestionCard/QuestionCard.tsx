@@ -1,4 +1,5 @@
 "use client";
+import { SetStateAction, Dispatch } from "react";
 
 import { getBGColor } from "./helpers";
 
@@ -9,6 +10,7 @@ type Props = {
   userAnswer: string | undefined;
   correctAnswer: string;
   onClick: (answer: string, currentQuestionIndex: number) => void;
+  setAllQuestions: Dispatch<SetStateAction<number>>;
 };
 
 const QuestionCard = ({
@@ -18,6 +20,7 @@ const QuestionCard = ({
   userAnswer,
   correctAnswer,
   onClick,
+  setAllQuestions,
 }: Props) => {
   return (
     <div className="mb-10 mt-2">
@@ -29,7 +32,10 @@ const QuestionCard = ({
         {answers?.map((answer) => (
           <div
             key={answer}
-            onClick={() => onClick(answer, currentQuestionIndex)}
+            onClick={() => {
+              onClick(answer, currentQuestionIndex);
+              setAllQuestions((prev: number) => prev + 1);
+            }}
             className={`${getBGColor(
               userAnswer,
               correctAnswer,

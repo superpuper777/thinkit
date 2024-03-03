@@ -3,9 +3,10 @@
 import {
   Difficulty,
   QuestionsState,
-  Question,
+  // Question,
   Token,
   Category,
+  QuestionsResponse,
 } from "@/types/quiz";
 import { shuffleArray } from "@/utils/arrayUtils";
 
@@ -14,11 +15,10 @@ export const getQuestions = async (
   difficulty: Difficulty | string,
   category: Category | string,
   token: string
-): Promise<QuestionsState> => {
+): Promise<QuestionsResponse> => {
   const getData = async () => {
     const endpoint = `https://opentdb.com/api.php?amount=${amount}&difficulty=${difficulty}&category=${category}&type=multiple&token=${token}`;
     const res = await fetch(endpoint, { cache: "no-store" });
-    console.log(res);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -26,14 +26,20 @@ export const getQuestions = async (
     return res.json();
   };
 
-  const data: { results: Array<Question> } = await getData();
-  return data.results.map((question) => ({
-    ...question,
-    answers: shuffleArray([
-      ...question.incorrect_answers,
-      question.correct_answer,
-    ]),
-  }));
+  const data: { response_code: number; results: QuestionsState } =
+    await getData();
+  console.log(data.response_code, data.results);
+  return {
+    response_code: data.response_code,
+    results: data.results.map((question) => ({
+      ...question,
+      answers: shuffleArray([
+        ...question.incorrect_answers,
+        question.correct_answer,
+      ]),
+    })),
+  };
+  // return;
 };
 
 export const resetToken = async (token: string): Promise<Token> => {

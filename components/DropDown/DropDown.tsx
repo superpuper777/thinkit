@@ -11,8 +11,6 @@ type Props = {
 };
 
 const DropDown = ({ options, value, onChange }: Props) => {
-  console.log(options);
-
   return (
     <Select
       primaryColor="gray"

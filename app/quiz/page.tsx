@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from "react";
 import QuestionCard from "@/components/QuestionCard/QuestionCard";
 import Button from "@/components/Button/Button";
-import { TERipple } from "tw-elements-react";
 
 import { difficulty, category, token } from "@/app/store/states";
+import { getQuestions } from "@/app/actions";
 import { QuestionsState } from "@/types/quiz";
 import Modal from "@/components/Modal/Modal";
-import { getQuestions } from "../actions";
+import FinishButton from "@/components/FinishButton/FinishButton";
 
 const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -17,6 +17,7 @@ const Quiz = () => {
   const [showModal, setShowModal] = useState(false);
   const [questions, setQuestions] = useState<QuestionsState>([]);
   const totalQuestions = 10;
+  const [allQuestions, setAllQuestions] = useState(0);
   console.log(category, difficulty, token);
   const isQuestionAnswered = usersAnswers[currentQuestionIndex] ? true : false;
 
@@ -30,8 +31,8 @@ const Quiz = () => {
         category,
         token
       );
-      console.log(data);
-      setQuestions(data);
+      console.log(data.response_code);
+      setQuestions(data.results);
     };
     fetchQuestions().catch(console.error);
   }, []);
@@ -58,10 +59,20 @@ const Quiz = () => {
 
   return (
     <div className="w-full max-w-lg p-[30px] rounded-3xl bg-slate-200 my-8 mx-auto">
-      <p className="font-bold text-[20px]">Score: {score}</p>
-      <p className="pb-2 font-bold text-base text-[##243c5a]">
-        Question {currentQuestionIndex + 1} out of {totalQuestions}
-      </p>
+      <div className="flex items-start justify-between">
+        <div>
+          <p className="font-bold text-[20px]">
+            Score:
+            <span className="text-[#40b46e] ml-2">{score}</span>
+            <span className="text-[#9694aa]">/{allQuestions}</span>
+          </p>
+          <p className="pb-2 font-bold text-base text-[##243c5a]">
+            Question {currentQuestionIndex + 1} out of {totalQuestions}
+          </p>
+        </div>
+        <FinishButton token={token} />
+      </div>
+
       <QuestionCard
         currentQuestionIndex={currentQuestionIndex}
         question={questions[currentQuestionIndex]?.question}
@@ -69,28 +80,26 @@ const Quiz = () => {
         userAnswer={usersAnswers[currentQuestionIndex]}
         correctAnswer={questions[currentQuestionIndex]?.correct_answer}
         onClick={handleOnAnswerClick}
+        setAllQuestions={setAllQuestions}
       />
       <div className="w-max-[600px] flex justify-between items-center">
-        <TERipple rippleColor="white">
-          <Button
-            size="sm:text-lg"
-            text="Prev"
-            onClick={() => handleChangeQuestion(-1)}
-            disabled={currentQuestionIndex === 0}
-          />
-        </TERipple>
-        <TERipple rippleColor="white">
-          <Button
-            size="sm:text-lg"
-            text={lastQuestion ? "End" : "Next"}
-            onClick={
-              lastQuestion
-                ? () => handleShowModal()
-                : () => handleChangeQuestion(1)
-            }
-          />
-        </TERipple>
+        <Button
+          size="sm:text-lg"
+          text="Prev"
+          onClick={() => handleChangeQuestion(-1)}
+          disabled={currentQuestionIndex === 0}
+        />
+        <Button
+          size="sm:text-lg"
+          text={lastQuestion ? "End" : "Next"}
+          onClick={
+            lastQuestion
+              ? () => handleShowModal()
+              : () => handleChangeQuestion(1)
+          }
+        />
       </div>
+
       <Modal
         showModal={showModal}
         setShowModal={setShowModal}
