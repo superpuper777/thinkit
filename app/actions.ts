@@ -3,7 +3,6 @@
 import {
   Difficulty,
   QuestionsState,
-  // Question,
   Token,
   Category,
   QuestionsResponse,
@@ -28,7 +27,6 @@ export const getQuestions = async (
 
   const data: { response_code: number; results: QuestionsState } =
     await getData();
-  console.log(data.response_code, data.results);
   return {
     response_code: data.response_code,
     results: data.results.map((question) => ({
@@ -39,7 +37,6 @@ export const getQuestions = async (
       ]),
     })),
   };
-  // return;
 };
 
 export const resetToken = async (token: string): Promise<Token> => {

@@ -3,7 +3,6 @@ import Image from "next/image";
 import Button from "@/components/Button/Button";
 import { useRouter } from "next/navigation";
 import HomePic from "@/assets/brain.jpg";
-// import Modal from "@/components/Modal/Modal";
 
 import DropDown from "@/components/DropDown/DropDown";
 import { Category, FormattedOption } from "@/types/quiz";
@@ -34,7 +33,6 @@ export default function Home({ categories }: Props) {
 
   const currentCategory = categoryStore((state) => state.category);
   const changeCurrentCategory = categoryStore((state) => state.changeCategory);
-  // const fetchToken = tokenStore((state) => state.fetch);
   const saveToken = tokenStore((state) => state.saveToken);
   const [category, setCategory] = useState<SelectValue | FormattedOption>(
     currentCategory
@@ -43,7 +41,6 @@ export default function Home({ categories }: Props) {
   const handleButtonClick = async () => {
     const { token } = await getToken();
     saveToken(token);
-    console.log(token);
     router.push("/quiz");
   };
 

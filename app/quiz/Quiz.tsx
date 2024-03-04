@@ -18,7 +18,6 @@ const Quiz = () => {
   const [questions, setQuestions] = useState<QuestionsState>([]);
   const totalQuestions = 10;
   const [allQuestions, setAllQuestions] = useState(0);
-  console.log(category, difficulty, token);
   const isQuestionAnswered = usersAnswers[currentQuestionIndex] ? true : false;
 
   const lastQuestion = currentQuestionIndex === totalQuestions - 1;
@@ -31,7 +30,6 @@ const Quiz = () => {
         category,
         token
       );
-      console.log(data.response_code);
       setQuestions(data.results);
     };
     fetchQuestions().catch(console.error);
