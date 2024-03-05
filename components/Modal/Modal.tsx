@@ -11,7 +11,7 @@ import {
 
 import { getQuestions } from "@/app/actions";
 import { QuestionsState } from "@/types/quiz";
-import { difficulty, category, token } from "@/app/store/states";
+import { difficulty, category, token } from "@/store/states";
 import FinishButton from "../FinishButton/FinishButton";
 
 type Props = {

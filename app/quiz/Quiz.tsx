@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import QuestionCard from "@/components/QuestionCard/QuestionCard";
 import Button from "@/components/Button/Button";
 
-import { difficulty, category, token } from "@/app/store/states";
+import { difficulty, category, token } from "@/store/states";
 import { getQuestions } from "@/app/actions";
 import { QuestionsState } from "@/types/quiz";
 import Modal from "@/components/Modal/Modal";

@@ -10,9 +10,9 @@ import { difficulties } from "@/mocks";
 import { formattedObject } from "@/utils/formattedOptionsObj";
 import { SelectValue } from "react-tailwindcss-select/dist/components/type";
 import { useState } from "react";
-import { difficultyStore } from "./store/difficulty";
-import { categoryStore } from "./store/category";
-import { tokenStore } from "./store/token";
+import { difficultyStore } from "@/store/difficulty";
+import { categoryStore } from "@/store/category";
+import { tokenStore } from "@/store/token";
 import { getToken } from "./actions";
 
 type Props = {
