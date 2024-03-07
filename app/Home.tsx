@@ -56,7 +56,8 @@ export default function Home({ categories }: Props) {
   return (
     <div className="flex flex-col gap-6 items-center mt-10">
       <p className="sm:text-2xl font-semibold text-sm">
-        Do you have what it takes to become the ThinkIt-Quiz master?
+        Do you wanna become the{" "}
+        <span className="uppercase">Thinkit-quiz master?</span>
       </p>
       <div className="w-full max-w-80 flex flex-col gap-4">
         <DropDown

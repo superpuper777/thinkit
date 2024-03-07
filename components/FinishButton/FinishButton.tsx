@@ -11,11 +11,9 @@ const FinishButton = ({ token }: Props) => {
   const router = useRouter();
   const handleFinishGame = async () => {
     await resetToken(token);
-    router.push("/");
+    router.push("/", { scroll: false });
   };
-  return (
-    <Button text="Finish Game" onClick={handleFinishGame} size="sm:text-lg" />
-  );
+  return <Button text="Finish" onClick={handleFinishGame} size="sm:text-lg" />;
 };
 
 export default FinishButton;

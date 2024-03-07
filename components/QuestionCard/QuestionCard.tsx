@@ -25,7 +25,7 @@ const QuestionCard = ({
   return (
     <div className="mb-10 mt-2">
       <p
-        className="text-[20px] max=w=[400px]"
+        className="max=w=[400px] md:text-xl text-sm"
         dangerouslySetInnerHTML={{ __html: question }}
       />
       <div className="flex flex-col pt-8 gap-3">
@@ -40,12 +40,12 @@ const QuestionCard = ({
               userAnswer,
               correctAnswer,
               answer
-            )} cursor-pointer flex items-center justify-center select-none font-bold text-xl px-3 py-1.5 rounded-md`}
+            )} cursor-pointer flex flex-wrap items-center justify-center select-none font-bold md:text-xl text-sm px-3 py-1.5 rounded-md`}
           >
             <span
-              className="truncate"
+              className="text-center"
               dangerouslySetInnerHTML={{ __html: answer }}
-            ></span>
+            />
           </div>
         ))}
       </div>

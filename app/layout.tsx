@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={quickSand.className}>
+      <body className={`${quickSand.className} overflow-scroll`}>
         <main className="min-h-screen w-full sm:px-20 sm:py-12 px-8 py-2">
           <header className="flex flex-col items-center">
             <Image
