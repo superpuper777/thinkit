@@ -16,3 +16,12 @@ export const getBGColor = (
 
   return "bg-white text-[#9694aa]";
 };
+
+export const getDifficultyColor = (difficulty: string) => {
+  console.log(difficulty == "easy");
+  return difficulty == "easy"
+    ? "text-lime-600"
+    : difficulty == "medium"
+    ? "text-amber-600"
+    : "text-rose-600";
+};

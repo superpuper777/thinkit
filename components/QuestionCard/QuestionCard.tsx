@@ -1,7 +1,7 @@
 "use client";
 import { SetStateAction, Dispatch } from "react";
 
-import { getBGColor } from "./helpers";
+import { getBGColor, getDifficultyColor } from "./helpers";
 
 type Props = {
   currentQuestionIndex: number;
@@ -11,6 +11,8 @@ type Props = {
   correctAnswer: string;
   onClick: (answer: string, currentQuestionIndex: number) => void;
   setAllQuestions: Dispatch<SetStateAction<number>>;
+  category: string;
+  difficulty: string;
 };
 
 const QuestionCard = ({
@@ -21,9 +23,18 @@ const QuestionCard = ({
   correctAnswer,
   onClick,
   setAllQuestions,
+  category,
+  difficulty,
 }: Props) => {
+  console.log(category, difficulty);
   return (
     <div className="mb-10 mt-2">
+      <p
+        className={`max=w=[400px] md:text-xl text-md font-semibold  ${getDifficultyColor(
+          difficulty
+        )}`}
+        dangerouslySetInnerHTML={{ __html: category }}
+      ></p>
       <p
         className="max=w=[400px] md:text-xl text-sm"
         dangerouslySetInnerHTML={{ __html: question }}

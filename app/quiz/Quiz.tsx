@@ -4,11 +4,14 @@ import React, { useEffect, useState } from "react";
 import QuestionCard from "@/components/QuestionCard/QuestionCard";
 import Button from "@/components/Button/Button";
 
-import { difficulty, category, token } from "@/store/states";
 import { getQuestions } from "@/app/actions";
 import { QuestionsState } from "@/types/quiz";
 import Modal from "@/components/Modal/Modal";
 import FinishButton from "@/components/FinishButton/FinishButton";
+import { responseObj } from "./../../utils/responseCodes";
+import { difficultyStore } from "@/store/difficulty";
+import { categoryStore } from "@/store/category";
+import { tokenStore } from "@/store/token";
 
 const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -16,24 +19,32 @@ const Quiz = () => {
   const [usersAnswers, setUserAnswers] = useState<Record<number, string>>({});
   const [showModal, setShowModal] = useState(false);
   const [questions, setQuestions] = useState<QuestionsState>([]);
-  const totalQuestions = 10;
-  const [allQuestions, setAllQuestions] = useState(0);
-  const isQuestionAnswered = usersAnswers[currentQuestionIndex] ? true : false;
+  const [responseCode, setResponseCode] = useState<number>(0);
 
+  const [allQuestions, setAllQuestions] = useState(0);
+
+  const difficulty = difficultyStore.getState().difficulty.value;
+  const category = categoryStore.getState().category.value;
+  const token = tokenStore.getState().token;
+
+  const totalQuestions = 10;
+  const isQuestionAnswered = usersAnswers[currentQuestionIndex] ? true : false;
   const lastQuestion = currentQuestionIndex === totalQuestions - 1;
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      const data = await getQuestions(
+      const { response_code, results } = await getQuestions(
         totalQuestions,
         difficulty,
         category,
         token
       );
-      setQuestions(data.results);
+
+      setResponseCode(response_code);
+      setQuestions(results);
     };
     fetchQuestions().catch(console.error);
-  }, []);
+  }, [difficulty, token, category]);
 
   const handleOnAnswerClick = (
     answer: string,
@@ -61,7 +72,7 @@ const Quiz = () => {
         <div>
           <p className="font-bold text-[20px]">
             Score:
-            <span className="text-[#40b46e] ml-2">{score}</span>
+            <span className="text-[#46b5d4] ml-2">{score}</span>
             <span className="text-[#9694aa]">/{allQuestions}</span>
           </p>
           <p className="pb-2 font-bold text-base text-[##243c5a]">
@@ -70,25 +81,33 @@ const Quiz = () => {
         </div>
         <FinishButton token={token} />
       </div>
+      {responseCode === 0 ? (
+        <QuestionCard
+          currentQuestionIndex={currentQuestionIndex}
+          question={questions[currentQuestionIndex]?.question}
+          answers={questions[currentQuestionIndex]?.answers}
+          userAnswer={usersAnswers[currentQuestionIndex]}
+          correctAnswer={questions[currentQuestionIndex]?.correct_answer}
+          onClick={handleOnAnswerClick}
+          setAllQuestions={setAllQuestions}
+          category={questions[currentQuestionIndex]?.category}
+          difficulty={questions[currentQuestionIndex]?.difficulty}
+        />
+      ) : (
+        <div className="pb-2 font-bold text-xl text-[#9694aa] my-4">
+          <p>{responseObj[responseCode]}</p>
+        </div>
+      )}
 
-      <QuestionCard
-        currentQuestionIndex={currentQuestionIndex}
-        question={questions[currentQuestionIndex]?.question}
-        answers={questions[currentQuestionIndex]?.answers}
-        userAnswer={usersAnswers[currentQuestionIndex]}
-        correctAnswer={questions[currentQuestionIndex]?.correct_answer}
-        onClick={handleOnAnswerClick}
-        setAllQuestions={setAllQuestions}
-      />
       <div className="w-max-[600px] flex justify-between items-center">
         <Button
-          size="sm:text-lg"
+          size="sm:text-lg md:text-xl"
           text="Prev"
           onClick={() => handleChangeQuestion(-1)}
           disabled={currentQuestionIndex === 0}
         />
         <Button
-          size="sm:text-lg"
+          size="sm:text-lg md:text-xl"
           text={lastQuestion ? "End" : "Next"}
           onClick={
             lastQuestion
