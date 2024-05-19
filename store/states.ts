@@ -1,7 +1,7 @@
-import { categoryStore } from "./category";
-import { difficultyStore } from "./difficulty";
-import { tokenStore } from "./token";
+import { categoryStore } from './category';
+import { difficultyStore } from './difficulty';
+import { tokenStore } from './token';
 
-export const category = categoryStore.getState().category.value;
-export const difficulty = difficultyStore.getState().difficulty.value;
-export const token = tokenStore.getState().token;
+export const getCategory = () => categoryStore.getState().category.value;
+export const getDifficulty = () => difficultyStore.getState().difficulty.value;
+export const getToken = () => tokenStore.getState().token;

@@ -1,7 +1,9 @@
-import { resetToken } from "@/app/actions";
-import { useRouter } from "next/navigation";
+import { resetToken } from '@/app/actions';
+import { useRouter } from 'next/navigation';
+import { categoryStore } from '@/store/category';
+import { difficultyStore } from '@/store/difficulty';
 
-import Button from "../Button/Button";
+import Button from '../Button/Button';
 
 type Props = {
   token: string;
@@ -9,9 +11,14 @@ type Props = {
 
 const FinishButton = ({ token }: Props) => {
   const router = useRouter();
+  const { resetCategory } = categoryStore();
+  const { resetDifficulty } = difficultyStore();
+
   const handleFinishGame = async () => {
     await resetToken(token);
-    router.push("/", { scroll: false });
+    resetCategory();
+    resetDifficulty();
+    router.push('/', { scroll: false });
     router.refresh();
   };
   return <Button text="Finish" onClick={handleFinishGame} size="sm:text-lg" />;

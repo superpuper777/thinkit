@@ -1,11 +1,7 @@
 'use client';
-// useEffect,
 import React, { useState } from 'react';
 import QuestionCard from '@/components/QuestionCard/QuestionCard';
 import Button from '@/components/Button/Button';
-
-// import { getQuestions } from '@/app/actions';
-// import { QuestionsState } from '@/types/quiz';
 import Modal from '@/components/Modal/Modal';
 import FinishButton from '@/components/FinishButton/FinishButton';
 import { responseObj } from './../../utils/responseCodes';
@@ -19,8 +15,6 @@ const Quiz = () => {
   const [score, setScore] = useState(0);
   const [usersAnswers, setUserAnswers] = useState<Record<number, string>>({});
   const [showModal, setShowModal] = useState(false);
-  // const [questions, setQuestions] = useState<QuestionsState>([]);
-  // const [responseCode, setResponseCode] = useState<number>(0);
 
   const [allQuestions, setAllQuestions] = useState(0);
 
@@ -28,6 +22,7 @@ const Quiz = () => {
   const category = categoryStore.getState().category.value;
   const token = tokenStore.getState().token;
 
+  console.log(difficulty, category);
   const totalQuestions = 10;
   const isQuestionAnswered = usersAnswers[currentQuestionIndex] ? true : false;
   const lastQuestion = currentQuestionIndex === totalQuestions - 1;
@@ -38,28 +33,6 @@ const Quiz = () => {
     category,
     token
   );
-
-  // const fetchQuizQuestions = async (dependencies: Dependencies) => {
-  //   const { totalQuestions, difficulty, category, token } = dependencies;
-  //   try {
-  //     const { response_code, results } = await getQuestions(
-  //       totalQuestions,
-  //       difficulty,
-  //       category,
-  //       token
-  //     );
-  //     setResponseCode(response_code);
-  //     setQuestions(results);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const dependencies = { totalQuestions, difficulty, category, token };
-  //   fetchQuizQuestions(dependencies);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [difficulty, token, category]);
 
   const handleAnswer = (answer: string, currentQuestionIndex: number) => {
     if (isQuestionAnswered) return;
