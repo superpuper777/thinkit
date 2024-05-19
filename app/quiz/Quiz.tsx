@@ -1,25 +1,26 @@
-"use client";
+'use client';
+// useEffect,
+import React, { useState } from 'react';
+import QuestionCard from '@/components/QuestionCard/QuestionCard';
+import Button from '@/components/Button/Button';
 
-import React, { useEffect, useState } from "react";
-import QuestionCard from "@/components/QuestionCard/QuestionCard";
-import Button from "@/components/Button/Button";
-
-import { getQuestions } from "@/app/actions";
-import { QuestionsState } from "@/types/quiz";
-import Modal from "@/components/Modal/Modal";
-import FinishButton from "@/components/FinishButton/FinishButton";
-import { responseObj } from "./../../utils/responseCodes";
-import { difficultyStore } from "@/store/difficulty";
-import { categoryStore } from "@/store/category";
-import { tokenStore } from "@/store/token";
+// import { getQuestions } from '@/app/actions';
+// import { QuestionsState } from '@/types/quiz';
+import Modal from '@/components/Modal/Modal';
+import FinishButton from '@/components/FinishButton/FinishButton';
+import { responseObj } from './../../utils/responseCodes';
+import { difficultyStore } from '@/store/difficulty';
+import { categoryStore } from '@/store/category';
+import { tokenStore } from '@/store/token';
+import useQuizQuestions from './useQuizQuestions';
 
 const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [usersAnswers, setUserAnswers] = useState<Record<number, string>>({});
   const [showModal, setShowModal] = useState(false);
-  const [questions, setQuestions] = useState<QuestionsState>([]);
-  const [responseCode, setResponseCode] = useState<number>(0);
+  // const [questions, setQuestions] = useState<QuestionsState>([]);
+  // const [responseCode, setResponseCode] = useState<number>(0);
 
   const [allQuestions, setAllQuestions] = useState(0);
 
@@ -31,29 +32,47 @@ const Quiz = () => {
   const isQuestionAnswered = usersAnswers[currentQuestionIndex] ? true : false;
   const lastQuestion = currentQuestionIndex === totalQuestions - 1;
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      const { response_code, results } = await getQuestions(
-        totalQuestions,
-        difficulty,
-        category,
-        token
-      );
+  const { questions, responseCode, setQuestions } = useQuizQuestions(
+    totalQuestions,
+    difficulty,
+    category,
+    token
+  );
 
-      setResponseCode(response_code);
-      setQuestions(results);
-    };
-    fetchQuestions().catch(console.error);
-  }, [difficulty, token, category]);
+  // const fetchQuizQuestions = async (dependencies: Dependencies) => {
+  //   const { totalQuestions, difficulty, category, token } = dependencies;
+  //   try {
+  //     const { response_code, results } = await getQuestions(
+  //       totalQuestions,
+  //       difficulty,
+  //       category,
+  //       token
+  //     );
+  //     setResponseCode(response_code);
+  //     setQuestions(results);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const dependencies = { totalQuestions, difficulty, category, token };
+  //   fetchQuizQuestions(dependencies);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [difficulty, token, category]);
+
+  const handleAnswer = (answer: string, currentQuestionIndex: number) => {
+    if (isQuestionAnswered) return;
+    const isCorrect = questions[currentQuestionIndex].correct_answer === answer;
+    if (isCorrect) setScore((prev) => prev + 1);
+    setUserAnswers((prev) => ({ ...prev, [currentQuestionIndex]: answer }));
+  };
 
   const handleOnAnswerClick = (
     answer: string,
     currentQuestionIndex: number
   ) => {
-    if (isQuestionAnswered) return;
-    const isCorrect = questions[currentQuestionIndex].correct_answer === answer;
-    if (isCorrect) setScore((prev) => prev + 1);
-    setUserAnswers((prev) => ({ ...prev, [currentQuestionIndex]: answer }));
+    handleAnswer(answer, currentQuestionIndex);
   };
 
   const handleChangeQuestion = (step: number) => {
@@ -108,7 +127,7 @@ const Quiz = () => {
         />
         <Button
           size="sm:text-lg md:text-xl"
-          text={lastQuestion ? "End" : "Next"}
+          text={lastQuestion ? 'End' : 'Next'}
           onClick={
             lastQuestion
               ? () => handleShowModal()
