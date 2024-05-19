@@ -5,9 +5,7 @@ import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
 import FinishButton from '@/components/FinishButton/FinishButton';
 import { responseObj } from './../../utils/responseCodes';
-import { difficultyStore } from '@/store/difficulty';
-import { categoryStore } from '@/store/category';
-import { tokenStore } from '@/store/token';
+import useStore from '@/store/useStore';
 import useQuizQuestions from './useQuizQuestions';
 
 const Quiz = () => {
@@ -18,19 +16,16 @@ const Quiz = () => {
 
   const [allQuestions, setAllQuestions] = useState(0);
 
-  const difficulty = difficultyStore.getState().difficulty.value;
-  const category = categoryStore.getState().category.value;
-  const token = tokenStore.getState().token;
+  const { category, difficulty, token } = useStore();
 
-  console.log(difficulty, category);
   const totalQuestions = 10;
   const isQuestionAnswered = usersAnswers[currentQuestionIndex] ? true : false;
   const lastQuestion = currentQuestionIndex === totalQuestions - 1;
 
   const { questions, responseCode, setQuestions } = useQuizQuestions(
     totalQuestions,
-    difficulty,
-    category,
+    difficulty.value,
+    category.value,
     token
   );
 
