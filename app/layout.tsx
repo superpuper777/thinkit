@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import { Quicksand } from "next/font/google";
-import Logo from "@/assets/logo.png";
-import "./globals.css";
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import { Quicksand } from 'next/font/google';
+import Logo from '@/assets/logo.png';
+import './globals.css';
 
 const quickSand = Quicksand({
-  subsets: ["latin"],
-  variable: "--font-quicksand",
+  subsets: ['latin'],
+  variable: '--font-quicksand',
 });
 
 export const metadata: Metadata = {
-  title: "Quiz App",
-  description: "Created by Alyona Budnik",
+  title: 'Quiz App',
+  description: 'Created by Alyona Budnik',
 };
 
 export default function RootLayout({

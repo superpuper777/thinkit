@@ -34,11 +34,10 @@ export default function Modal({
   const category = getCategory();
   const difficulty = getDifficulty();
   const token = getToken();
-  console.log(difficulty, category);
 
-  // const difficulty = difficultyStore.getState().difficulty.value;
-  // const category = categoryStore.getState().category.value;
-  // const token = tokenStore.getState().token;
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   const handleCountinueGame = async () => {
     const data = await getQuestions(
@@ -66,7 +65,7 @@ export default function Modal({
               <button
                 type="button"
                 className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-                onClick={() => setShowModal(false)}
+                onClick={handleCloseModal}
                 aria-label="Close">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +97,7 @@ export default function Modal({
                   Countinue Game
                 </button>
               </TERipple>
-              <FinishButton token={token} />
+              <FinishButton onCloseModal={handleCloseModal} />
             </TEModalFooter>
           </TEModalContent>
         </TEModalDialog>
