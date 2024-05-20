@@ -7,20 +7,14 @@ import FinishButton from '@/components/FinishButton/FinishButton';
 import { responseObj } from './../../utils/responseCodes';
 import useStore from '@/store/useStore';
 import useQuizQuestions from './useQuizQuestions';
+import useQuizAnswers from './useQuizAnswers';
+import useQuestionIndex from './useQuestionIndex';
+import useModal from './useModal';
 
 const Quiz = () => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [score, setScore] = useState(0);
-  const [usersAnswers, setUserAnswers] = useState<Record<number, string>>({});
-  const [showModal, setShowModal] = useState(false);
-
   const [allQuestions, setAllQuestions] = useState(0);
-
   const { category, difficulty, token } = useStore();
-
   const totalQuestions = 10;
-  const isQuestionAnswered = usersAnswers[currentQuestionIndex] ? true : false;
-  const lastQuestion = currentQuestionIndex === totalQuestions - 1;
 
   const { questions, responseCode, setQuestions } = useQuizQuestions(
     totalQuestions,
@@ -29,28 +23,21 @@ const Quiz = () => {
     token
   );
 
-  const handleAnswer = (answer: string, currentQuestionIndex: number) => {
-    if (isQuestionAnswered) return;
-    const isCorrect = questions[currentQuestionIndex].correct_answer === answer;
-    if (isCorrect) setScore((prev) => prev + 1);
-    setUserAnswers((prev) => ({ ...prev, [currentQuestionIndex]: answer }));
-  };
+  const { usersAnswers, handleAnswer, setUserAnswers, score } =
+    useQuizAnswers(questions);
+  const {
+    currentQuestionIndex,
+    handleChangeQuestion,
+    setCurrentQuestionIndex,
+    lastQuestion,
+  } = useQuestionIndex(10);
+  const { showModal, handleShowModal, setShowModal } = useModal();
 
   const handleOnAnswerClick = (
     answer: string,
     currentQuestionIndex: number
   ) => {
     handleAnswer(answer, currentQuestionIndex);
-  };
-
-  const handleChangeQuestion = (step: number) => {
-    const newQuestionIndex = currentQuestionIndex + step;
-    if (newQuestionIndex < 0 || newQuestionIndex >= totalQuestions) return;
-    setCurrentQuestionIndex(newQuestionIndex);
-  };
-
-  const handleShowModal = async () => {
-    setShowModal(true);
   };
 
   return (

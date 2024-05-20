@@ -13,15 +13,17 @@ const FinishButton = ({ onCloseModal }: Props) => {
   const { token, resetCategory, resetDifficulty } = useStore();
 
   const handleFinishGame = async () => {
-    await resetToken(token);
-    resetCategory();
-    resetDifficulty();
-    router.push('/');
-    router.refresh();
-
     if (onCloseModal) {
       onCloseModal();
     }
+    try {
+      await resetToken(token);
+      resetCategory();
+      resetDifficulty();
+    } catch (error) {
+      console.error('Error occurred while resetting the token:', error);
+    }
+    router.push('/');
   };
 
   return <Button text="Finish" onClick={handleFinishGame} size="sm:text-lg" />;
