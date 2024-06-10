@@ -1,7 +1,7 @@
-"use client";
-import { SetStateAction, Dispatch } from "react";
+'use client';
+import { SetStateAction, Dispatch } from 'react';
 
-import { getBGColor, getDifficultyColor } from "./helpers";
+import { getBGColor, getDifficultyColor } from './helpers';
 
 type Props = {
   currentQuestionIndex: number;
@@ -26,15 +26,13 @@ const QuestionCard = ({
   category,
   difficulty,
 }: Props) => {
-  console.log(category, difficulty);
   return (
     <div className="mb-10 mt-2">
       <p
         className={`max=w=[400px] md:text-xl text-md font-semibold  ${getDifficultyColor(
           difficulty
         )}`}
-        dangerouslySetInnerHTML={{ __html: category }}
-      ></p>
+        dangerouslySetInnerHTML={{ __html: category }}></p>
       <p
         className="max=w=[400px] md:text-xl text-sm"
         dangerouslySetInnerHTML={{ __html: question }}
@@ -51,8 +49,7 @@ const QuestionCard = ({
               userAnswer,
               correctAnswer,
               answer
-            )} cursor-pointer flex flex-wrap items-center justify-center select-none font-bold md:text-xl text-sm px-3 py-1.5 rounded-md`}
-          >
+            )} cursor-pointer flex flex-wrap items-center justify-center select-none font-bold md:text-xl text-sm px-3 py-1.5 rounded-md`}>
             <span
               className="text-center"
               dangerouslySetInnerHTML={{ __html: answer }}

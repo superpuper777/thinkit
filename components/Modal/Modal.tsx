@@ -16,6 +16,9 @@ import FinishButton from '../FinishButton/FinishButton';
 
 type Props = {
   showModal: boolean;
+  score: number;
+  totalCorrect: number;
+  allQuestions: number;
   setShowModal: Dispatch<SetStateAction<boolean>>;
   currentToken: string;
   setCurrentQuestionIndex: Dispatch<SetStateAction<number>>;
@@ -25,6 +28,9 @@ type Props = {
 
 export default function Modal({
   showModal,
+  score,
+  totalCorrect,
+  allQuestions,
   setShowModal,
   setCurrentQuestionIndex,
   setQuestions,
@@ -52,6 +58,39 @@ export default function Modal({
     setCurrentQuestionIndex(0);
     setShowModal(false);
   };
+
+  // const handleFinish = () => {
+  //   const correctAnswers = answeredQuestions.filter(q => q.isCorrect).length;
+  //   const score = calculateScore(answeredQuestions);
+
+  //   saveToLocalStorage('quizResults', {
+  //     correctAnswers,
+  //     totalQuestionsAnswered: answeredQuestions.length,
+  //     score,
+  //   });
+
+  //   router.push('/results'); // Переход на страницу результатов
+  // };
+
+  // const handleFinish = () => {
+  //   const correctAnswers = answeredQuestions.filter(q => q.isCorrect).length;
+  //   saveResultsToLocalStorage(correctAnswers, answeredQuestions.length);
+  //   router.push('/'); // Переход на главную страницу
+  // };
+
+  // const saveResultsToLocalStorage = (correctAnswers: number, totalQuestions: number) => {
+  //   const results = {
+  //     correctAnswers,
+  //     totalQuestions,
+  //     date: new Date().toISOString(),
+  //   };
+
+  //   const savedResults = localStorage.getItem('quizResults');
+  //   const resultsArray = savedResults ? JSON.parse(savedResults) : [];
+  //   resultsArray.push(results);
+
+  //   localStorage.setItem('quizResults', JSON.stringify(resultsArray));
+  // };
 
   return (
     <div>
@@ -87,6 +126,11 @@ export default function Modal({
                 You can continue the game and get more questions or finish the
                 game right now. Make a choice!
               </p>
+              <p>
+                You answered correctly to {totalCorrect} questions out of{' '}
+                {allQuestions}
+              </p>
+              <p>Your result: {score}</p>
             </TEModalBody>
             <TEModalFooter className="flex gap-5">
               <TERipple rippleColor="white">

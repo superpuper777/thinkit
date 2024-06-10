@@ -4,12 +4,12 @@ import QuestionCard from '@/components/QuestionCard/QuestionCard';
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
 import FinishButton from '@/components/FinishButton/FinishButton';
-import { responseObj } from './../../utils/responseCodes';
 import useStore from '@/store/useStore';
 import useQuizQuestions from './useQuizQuestions';
 import useQuizAnswers from './useQuizAnswers';
 import useQuestionIndex from './useQuestionIndex';
 import useModal from './useModal';
+import { responseObj, calculateResult } from '@/utils';
 
 const Quiz = () => {
   const [allQuestions, setAllQuestions] = useState(0);
@@ -23,7 +23,7 @@ const Quiz = () => {
     token
   );
 
-  const { usersAnswers, handleAnswer, setUserAnswers, score } =
+  const { usersAnswers, handleAnswer, setUserAnswers, totalCorrect } =
     useQuizAnswers(questions);
   const {
     currentQuestionIndex,
@@ -39,16 +39,17 @@ const Quiz = () => {
   ) => {
     handleAnswer(answer, currentQuestionIndex);
   };
-
+  const score = calculateResult(totalCorrect, allQuestions);
   return (
     <div className="w-full max-w-lg p-[30px] rounded-3xl bg-slate-200 my-8 mx-auto">
       <div className="flex items-start justify-between">
         <div>
           <p className="font-bold text-[20px]">
             Score:
-            <span className="text-[#46b5d4] ml-2">{score}</span>
+            <span className="text-[#46b5d4] ml-2">{totalCorrect}</span>
             <span className="text-[#9694aa]">/{allQuestions}</span>
           </p>
+          <p>Your result: {score ? score : 0}</p>
           <p className="pb-2 font-bold text-base text-[##243c5a]">
             Question {currentQuestionIndex + 1} out of {totalQuestions}
           </p>
@@ -95,6 +96,9 @@ const Quiz = () => {
         showModal={showModal}
         setShowModal={setShowModal}
         currentToken={token}
+        score={score}
+        totalCorrect={totalCorrect}
+        allQuestions={allQuestions}
         setCurrentQuestionIndex={setCurrentQuestionIndex}
         setQuestions={setQuestions}
         setUserAnswers={setUserAnswers}
