@@ -6,9 +6,11 @@ import useFinishGame from '@/utils/useFinishGame';
 type Props = {
   onCloseModal?: () => void;
   token: string;
+  score: number;
+  allQuestions: number;
 };
 
-const FinishButton = ({ onCloseModal, token }: Props) => {
+const FinishButton = ({ onCloseModal, token, score, allQuestions }: Props) => {
   const router = useRouter();
   const finishGame = useFinishGame();
 
@@ -16,7 +18,7 @@ const FinishButton = ({ onCloseModal, token }: Props) => {
     if (onCloseModal) {
       onCloseModal();
     }
-    await finishGame(token, () => router.push('/'));
+    await finishGame(token, score, allQuestions, () => router.push('/'));
   };
 
   return <Button text="Finish" onClick={handleFinishGame} size="sm:text-lg" />;

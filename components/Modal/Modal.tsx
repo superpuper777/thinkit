@@ -108,7 +108,12 @@ export default function Modal({
                   Countinue Game
                 </button>
               </TERipple>
-              <FinishButton onCloseModal={handleCloseModal} token={token} />
+              <FinishButton
+                onCloseModal={handleCloseModal}
+                token={token}
+                score={score}
+                allQuestions={allQuestions}
+              />
             </TEModalFooter>
           </TEModalContent>
         </TEModalDialog>
