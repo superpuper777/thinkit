@@ -54,7 +54,7 @@ const Quiz = () => {
             Question {currentQuestionIndex + 1} out of {totalQuestions}
           </p>
         </div>
-        <FinishButton />
+        <FinishButton token={token} />
       </div>
       {responseCode === 0 ? (
         <QuestionCard

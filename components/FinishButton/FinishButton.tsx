@@ -1,29 +1,22 @@
-import { resetToken } from '@/app/actions';
 import { useRouter } from 'next/navigation';
 
-import useStore from '@/store/useStore';
 import Button from '../Button/Button';
+import useFinishGame from '@/utils/useFinishGame';
 
 type Props = {
   onCloseModal?: () => void;
+  token: string;
 };
 
-const FinishButton = ({ onCloseModal }: Props) => {
+const FinishButton = ({ onCloseModal, token }: Props) => {
   const router = useRouter();
-  const { token, resetCategory, resetDifficulty } = useStore();
+  const finishGame = useFinishGame();
 
   const handleFinishGame = async () => {
     if (onCloseModal) {
       onCloseModal();
     }
-    try {
-      await resetToken(token);
-      resetCategory();
-      resetDifficulty();
-    } catch (error) {
-      console.error('Error occurred while resetting the token:', error);
-    }
-    router.push('/');
+    await finishGame(token, () => router.push('/'));
   };
 
   return <Button text="Finish" onClick={handleFinishGame} size="sm:text-lg" />;

@@ -59,39 +59,6 @@ export default function Modal({
     setShowModal(false);
   };
 
-  // const handleFinish = () => {
-  //   const correctAnswers = answeredQuestions.filter(q => q.isCorrect).length;
-  //   const score = calculateScore(answeredQuestions);
-
-  //   saveToLocalStorage('quizResults', {
-  //     correctAnswers,
-  //     totalQuestionsAnswered: answeredQuestions.length,
-  //     score,
-  //   });
-
-  //   router.push('/results'); // Переход на страницу результатов
-  // };
-
-  // const handleFinish = () => {
-  //   const correctAnswers = answeredQuestions.filter(q => q.isCorrect).length;
-  //   saveResultsToLocalStorage(correctAnswers, answeredQuestions.length);
-  //   router.push('/'); // Переход на главную страницу
-  // };
-
-  // const saveResultsToLocalStorage = (correctAnswers: number, totalQuestions: number) => {
-  //   const results = {
-  //     correctAnswers,
-  //     totalQuestions,
-  //     date: new Date().toISOString(),
-  //   };
-
-  //   const savedResults = localStorage.getItem('quizResults');
-  //   const resultsArray = savedResults ? JSON.parse(savedResults) : [];
-  //   resultsArray.push(results);
-
-  //   localStorage.setItem('quizResults', JSON.stringify(resultsArray));
-  // };
-
   return (
     <div>
       <TEModal show={showModal} setShow={setShowModal}>
@@ -141,7 +108,7 @@ export default function Modal({
                   Countinue Game
                 </button>
               </TERipple>
-              <FinishButton onCloseModal={handleCloseModal} />
+              <FinishButton onCloseModal={handleCloseModal} token={token} />
             </TEModalFooter>
           </TEModalContent>
         </TEModalDialog>
