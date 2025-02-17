@@ -1,5 +1,8 @@
 export const calculateResult = (totalCorrect: number, allQuestions: number) => {
-  const percentage = Math.round((totalCorrect / allQuestions) * 100);
-  const score = percentage + totalCorrect;
-  return score;
+  if (allQuestions === 0) return 0;
+
+  const basePoints = totalCorrect * 10;
+  const difficultyMultiplier = 1 + allQuestions / 100;
+
+  return Math.round(basePoints * difficultyMultiplier);
 };

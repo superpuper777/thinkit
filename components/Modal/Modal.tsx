@@ -110,7 +110,6 @@ export default function Modal({
               </TERipple>
               <FinishButton
                 onCloseModal={handleCloseModal}
-                token={token}
                 score={score}
                 allQuestions={allQuestions}
               />
