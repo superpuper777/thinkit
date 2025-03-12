@@ -9,19 +9,18 @@ export const getBGColor = (
     (isAnswerCorrect === true && answer === userAnswer) ||
     (isAnswerCorrect === false && answer === correctAnswer)
   )
-    return "bg-[#55AC78] text-white";
+    return 'bg-[#55AC78] text-white';
 
   if (isAnswerCorrect === false && answer === userAnswer)
-    return "bg-[#AC5050] text-white";
+    return 'bg-[#AC5050] text-white';
 
-  return "bg-white text-[#9694aa]";
+  return 'bg-white text-[#9694aa]';
 };
 
 export const getDifficultyColor = (difficulty: string) => {
-  console.log(difficulty == "easy");
-  return difficulty == "easy"
-    ? "text-lime-600"
-    : difficulty == "medium"
-    ? "text-amber-600"
-    : "text-rose-600";
+  return difficulty == 'easy'
+    ? 'text-lime-600'
+    : difficulty == 'medium'
+    ? 'text-amber-600'
+    : 'text-rose-600';
 };

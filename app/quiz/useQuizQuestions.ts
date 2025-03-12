@@ -2,18 +2,10 @@ import { useEffect, useState } from 'react';
 import { getQuestions } from '@/app/actions';
 import { QuestionsState } from '@/types/quiz';
 
-// interface Dependencies {
-//   totalQuestions: number;
-//   difficulty: string;
-//   category: string;
-//   token: string;
-// }
-
 interface QuizState {
   questions: QuestionsState;
   responseCode: number;
   setQuestions: React.Dispatch<React.SetStateAction<QuestionsState>>;
-  // setResponseCode: React.Dispatch<React.SetStateAction<number>>;
 }
 const useQuizQuestions = (
   totalQuestions: number,
