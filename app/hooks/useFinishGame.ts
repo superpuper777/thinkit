@@ -1,30 +1,39 @@
 import { resetToken } from '@/app/actions';
 import useStore from '@/store/useStore';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import useQuizResults from './useQuizResults';
 
 const useFinishGame = () => {
-  const { category, token, resetCategory, resetDifficulty } = useStore();
+  const { category, token, difficulty, resetCategory, resetDifficulty } =
+    useStore();
 
   const { saveResultsToLocalStorage } = useQuizResults();
 
-  const finishGame = async (
-    score: number,
-    allQuestions: number,
-    onReset: () => void
-  ) => {
+  const finishGame = async (score: number, allQuestions: number) => {
     try {
-      await resetToken(token);
       const isNewRecord = saveResultsToLocalStorage(
         score,
         allQuestions,
-        category.value
+        category.value || '',
+        difficulty.value || ''
       );
-      resetCategory();
-      resetDifficulty();
-      onReset();
+
+      resetToken(token);
+      if (category.value) {
+        resetCategory();
+      }
+      if (difficulty.value) {
+        resetDifficulty();
+      }
+
       if (isNewRecord) {
-        alert(
-          `Congratulations! New record: ${score} correct answers from ${allQuestions} questions.`
+        toast.success(
+          `Congratulations! New record: ${score} correct answers from ${allQuestions} questions in ${category.label} category using ${difficulty.label} difficulty.`,
+          {
+            position: 'top-right',
+            autoClose: 6000,
+          }
         );
       }
     } catch (error) {

@@ -1,14 +1,16 @@
 'use client';
 import React, { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import QuestionCard from '@/components/QuestionCard/QuestionCard';
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
 import FinishButton from '@/components/FinishButton/FinishButton';
 import useStore from '@/store/useStore';
-import useQuizQuestions from './useQuizQuestions';
-import useQuizAnswers from './useQuizAnswers';
-import useQuestionIndex from './useQuestionIndex';
-import useModal from './useModal';
+import useQuizQuestions from '../hooks/useQuizQuestions';
+import useQuizAnswers from '../hooks/useQuizAnswers';
+import useQuestionIndex from '../hooks/useQuestionIndex';
+import useModal from '../hooks/useModal';
 import { responseObj, calculateResult } from '@/utils';
 
 const Quiz = () => {
@@ -42,6 +44,7 @@ const Quiz = () => {
   const score = calculateResult(totalCorrect, allQuestions);
   return (
     <div className="w-full max-w-lg p-[30px] rounded-3xl bg-slate-200 my-8 mx-auto">
+      <ToastContainer position="top-right" />
       <div className="flex items-start justify-between">
         <div>
           <p className="font-bold text-[20px]">

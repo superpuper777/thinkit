@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Button from '../Button/Button';
@@ -13,12 +14,14 @@ const FinishButton = ({ onCloseModal, score, allQuestions }: Props) => {
   const router = useRouter();
   const finishGame = useFinishGame();
 
-  const handleFinishGame = async () => {
+  const handleFinishGame = useCallback(async () => {
+    await finishGame(score, allQuestions);
+
     if (onCloseModal) {
-      onCloseModal();
+      await onCloseModal();
     }
-    await finishGame(score, allQuestions, () => router.push('/'));
-  };
+    router.push('/');
+  }, [finishGame, score, allQuestions, onCloseModal, router]);
 
   return <Button text="Finish" onClick={handleFinishGame} size="sm:text-lg" />;
 };
