@@ -1,17 +1,17 @@
-"use client";
-import Button from "@/components/Button/Button";
-import { useRouter } from "next/navigation";
+'use client';
+import Button from '@/components/Button/Button';
+import { useRouter } from 'next/navigation';
 
-import DropDown from "@/components/DropDown/DropDown";
-import { Category, FormattedOption } from "@/types/quiz";
-import { difficulties } from "@/mocks";
-import { formattedObject } from "@/utils/formattedOptionsObj";
-import { SelectValue } from "react-tailwindcss-select/dist/components/type";
-import { useState } from "react";
-import { difficultyStore } from "@/store/difficulty";
-import { categoryStore } from "@/store/category";
-import { tokenStore } from "@/store/token";
-import { getToken } from "./actions";
+import DropDown from '@/components/DropDown/DropDown';
+import { Category, FormattedOption } from '@/types/quiz';
+import { difficulties } from '@/mocks';
+import { formattedObject } from '@/utils/formattedOptionsObj';
+import { SelectValue } from 'react-tailwindcss-select/dist/components/type';
+import { useState } from 'react';
+import { difficultyStore } from '@/store/difficulty';
+import { categoryStore } from '@/store/category';
+import { tokenStore } from '@/store/token';
+import { getToken } from './actions';
 
 type Props = {
   categories: Array<Category>;
@@ -39,7 +39,7 @@ export default function Home({ categories }: Props) {
   const handleButtonClick = async () => {
     const { token } = await getToken();
     saveToken(token);
-    router.push("/quiz");
+    router.push('/quiz');
   };
 
   const handleCategoryChange = (value: SelectValue) => {
@@ -53,14 +53,14 @@ export default function Home({ categories }: Props) {
   };
   return (
     <div className="flex flex-col gap-6 items-center mt-10">
-      <p className="sm:text-4xl font-semibold text-2xl text-white">
-        Do you wanna become the{" "}
-        <span className="uppercase">Thinkit-quiz master?</span>
+      <p className="sm:text-3xl font-semibold text-sm text-white text-center rounded-md bg-[#9694aa] px-6">
+        Do you wanna become the{' '}
+        <span className="uppercase">Thinkit master?</span>
       </p>
       <div className="w-full max-w-80 flex flex-col gap-4">
         <DropDown
           options={[
-            { value: "", label: "Any Category" },
+            { value: '', label: 'Any Category' },
             ...formattedCategories,
           ]}
           value={category}
@@ -73,10 +73,9 @@ export default function Home({ categories }: Props) {
         />
       </div>
       <Button
-        text={"Start"}
+        text={'Start'}
         onClick={handleButtonClick}
-        size="sm:text-2xl text-white"
-      ></Button>
+        size="sm:text-2xl text-white"></Button>
     </div>
   );
 }

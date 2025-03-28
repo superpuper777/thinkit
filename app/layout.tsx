@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import { Quicksand } from 'next/font/google';
 import Header from '@/components/Header/Header';
-// import HomePic from "@/assets/brain.jpg";
+
+import brain from '@/assets/brain.jpg';
 
 import './globals.css';
+import Image from 'next/image';
 
 const quickSand = Quicksand({
   subsets: ['latin'],
@@ -23,8 +25,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${quickSand.className} overflow-scroll`}>
-        <main className="min-h-screen w-full sm:px-20 sm:py-12 px-8 py-2 bg-[url('../assets/brain.jpg')] bg-center bg-cover bg-no-repeat">
-         <Header/>
+        <div className="absolute w-full h-screen z-0 opacity-75">
+          <Image
+            src={brain}
+            alt="Background Image"
+            layout="fill"
+            style={{ objectFit: 'cover' }}
+            priority={true}
+          />
+        </div>
+        <main className="relative min-h-screen w-full sm:px-20 sm:py-12 px-8 py-2 z-40">
+          <Header />
           {children}
         </main>
       </body>
