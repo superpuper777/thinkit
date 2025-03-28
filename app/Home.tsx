@@ -1,8 +1,6 @@
 "use client";
-import Image from "next/image";
 import Button from "@/components/Button/Button";
 import { useRouter } from "next/navigation";
-import HomePic from "@/assets/brain.jpg";
 
 import DropDown from "@/components/DropDown/DropDown";
 import { Category, FormattedOption } from "@/types/quiz";
@@ -55,7 +53,7 @@ export default function Home({ categories }: Props) {
   };
   return (
     <div className="flex flex-col gap-6 items-center mt-10">
-      <p className="sm:text-2xl font-semibold text-sm">
+      <p className="sm:text-4xl font-semibold text-2xl text-white">
         Do you wanna become the{" "}
         <span className="uppercase">Thinkit-quiz master?</span>
       </p>
@@ -74,15 +72,10 @@ export default function Home({ categories }: Props) {
           onChange={handleDifficultyChange}
         />
       </div>
-      <Image
-        className="max-w-[700px] w-full rounded-lg"
-        src={HomePic}
-        alt="picture"
-      />
       <Button
-        text={"Start Quiz"}
+        text={"Start"}
         onClick={handleButtonClick}
-        size="sm:text-3xl"
+        size="sm:text-2xl text-white"
       ></Button>
     </div>
   );
