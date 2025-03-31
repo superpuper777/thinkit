@@ -25,11 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${quickSand.className} overflow-scroll`}>
-        <div className="absolute w-full h-screen z-0 opacity-75">
+        <div className="absolute w-full h-screen z-0 opacity-90">
           <Image
             src={brain}
             alt="Background Image"
-            layout="fill"
+            fill
             style={{ objectFit: 'cover' }}
             priority={true}
           />

@@ -1,7 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import QuestionCard from '@/components/QuestionCard/QuestionCard';
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
@@ -44,7 +42,6 @@ const Quiz = () => {
   const score = calculateResult(totalCorrect, allQuestions);
   return (
     <div className="w-full max-w-lg p-[30px] rounded-3xl bg-slate-200 my-8 mx-auto">
-      <ToastContainer position="top-right" />
       <div className="flex items-start justify-between">
         <div>
           <p className="font-bold text-[20px]">

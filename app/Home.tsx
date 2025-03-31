@@ -1,6 +1,8 @@
 'use client';
 import Button from '@/components/Button/Button';
 import { useRouter } from 'next/navigation';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import DropDown from '@/components/DropDown/DropDown';
 import { Category, FormattedOption } from '@/types/quiz';
@@ -53,6 +55,7 @@ export default function Home({ categories }: Props) {
   };
   return (
     <div className="flex flex-col gap-6 items-center mt-10">
+       <ToastContainer position="top-right" />
       <p className="sm:text-3xl font-semibold text-sm text-white text-center rounded-md bg-[#9694aa] px-6">
         Do you wanna become the{' '}
         <span className="uppercase">Thinkit master?</span>
