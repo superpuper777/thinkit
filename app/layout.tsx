@@ -25,19 +25,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${quickSand.className} overflow-scroll`}>
-        <div className="absolute w-full h-screen z-0 opacity-90">
-          <Image
-            src={brain}
-            alt="Background Image"
-            fill
-            style={{ objectFit: 'cover' }}
-            priority={true}
-          />
-        </div>
-        <main className="relative min-h-screen w-full sm:px-20 sm:py-12 px-8 py-2 z-40">
-          <Header />
-          {children}
-        </main>
+          <div className="absolute w-full h-screen z-0 opacity-90">
+            <Image
+              src={brain}
+              alt="Background Image"
+              fill
+              style={{ objectFit: 'cover' }}
+              priority={true}
+            />
+          </div>
+          <main className="relative min-h-screen w-full sm:px-20 sm:py-12 px-8 py-2 z-40 flex flex-col">
+            <Header />
+            {children}
+          </main>
       </body>
     </html>
   );

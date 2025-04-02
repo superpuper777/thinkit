@@ -2,7 +2,7 @@ import Logo from '@/assets/logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const Header = () => {
+const Header = async () => {
   return (
     <header className="flex justify-between items-center text-xl font-bold">
       <div className="flex justify-start items-center gap-6">
@@ -17,11 +17,17 @@ const Header = () => {
           Player Rating
         </Link>
       </div>
+      {/* {session ? (
+            <>
+              <li>Привет, {session.user?.name}</li>
+              <li><button onClick={() => signOut()}>Выйти</button></li>
+            </>
+          ) :( )}*/
       <Link
-        href="/login"
+        href="/auth/signin"
         className="text-white hover:text-amber-400 focus:text-indigo-500">
-        Log in
-      </Link>
+        Sign in with Google
+      </Link>}
     </header>
   );
 };
