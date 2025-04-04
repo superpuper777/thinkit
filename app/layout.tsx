@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Quicksand } from 'next/font/google';
+import { getSession } from "@/auth"
+import Providers from "./providers"
 import Header from '@/components/Header/Header';
 
 import brain from '@/assets/brain.jpg';
@@ -17,14 +19,16 @@ export const metadata: Metadata = {
   description: 'Created by Alyona Budnik',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getSession()
   return (
     <html lang="en">
       <body className={`${quickSand.className} overflow-scroll`}>
+        <Providers session={session}>
           <div className="absolute w-full h-screen z-0 opacity-90">
             <Image
               src={brain}
@@ -38,6 +42,7 @@ export default function RootLayout({
             <Header />
             {children}
           </main>
+        </Providers>
       </body>
     </html>
   );
