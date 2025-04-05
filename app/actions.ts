@@ -9,6 +9,8 @@ import {
 } from "@/types/quiz";
 import { shuffleArray } from "@/utils/arrayUtils";
 
+const apiUrl = process.env.API_URL;
+
 export const getQuestions = async (
   amount: number | string,
   difficulty: Difficulty | string,
@@ -16,7 +18,7 @@ export const getQuestions = async (
   token: string
 ): Promise<QuestionsResponse> => {
   const getData = async () => {
-    const endpoint = `https://opentdb.com/api.php?amount=${amount}&difficulty=${difficulty}&category=${category}&type=multiple&token=${token}`;
+    const endpoint = `${apiUrl}api.php?amount=${amount}&difficulty=${difficulty}&category=${category}&type=multiple&token=${token}`;
     const res = await fetch(endpoint, { cache: "no-store" });
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -40,7 +42,7 @@ export const getQuestions = async (
 };
 
 export const resetToken = async (token: string): Promise<Token> => {
-  const endpoint = `https://opentdb.com/api_token.php?command=reset&token=${token}`;
+  const endpoint = `${apiUrl}api_token.php?command=reset&token=${token}`;
   const res = await fetch(endpoint, { cache: "no-store" });
   if (!res.ok) {
     throw new Error("Failed to fetch data");
@@ -50,7 +52,7 @@ export const resetToken = async (token: string): Promise<Token> => {
 };
 
 export const getToken = async (): Promise<Token> => {
-  const endpoint = `https://opentdb.com/api_token.php?command=request`;
+  const endpoint = `${apiUrl}api_token.php?command=request`;
   const res = await fetch(endpoint);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
