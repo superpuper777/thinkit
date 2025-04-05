@@ -8,22 +8,22 @@ export default function SignIn() {
 
   const handleGoogleLogin = async () => {
     setIsLoading(true);
-    const res = await signIn('google', { redirect: false });
+    const res = await signIn('google', { redirect: true, callbackUrl: '/' });
     if (res?.error) {
-      setError('Ошибка при входе с Google. Попробуйте еще раз!');
-    }
+      setError('Error signing in with Google. Please try again!');
+    } 
     setIsLoading(false);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h1 className="text-xl mb-4 text-white">Вход через Google</h1>
+    <div className="flex flex-col items-center justify-center min-h-full bg-white p-8 rounded-lg shadow-lg w-full sm:w-1/3 max-w-md mx-auto">
+      <h1 className="text-xl mb-4 text-gray-500 font-semibold">Sign in with Google</h1>
       <button
         onClick={handleGoogleLogin}
         disabled={isLoading}
         className="bg-blue-500 text-white p-2 rounded"
       >
-        {isLoading ? 'Загрузка...' : 'Войти через Google'}
+        {isLoading ? 'Loading...' : 'Войти через Google'}
       </button>
       {error && <p className="text-red-500">{error}</p>}
     </div>

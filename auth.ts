@@ -18,7 +18,8 @@ const authOptions: AuthOptions = {
             params: {
               prompt: "select_account",
             },
-     }}),
+     }
+    }),
    ],
    pages: {
      signIn: '/auth/signin',
