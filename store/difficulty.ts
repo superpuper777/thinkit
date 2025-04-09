@@ -1,9 +1,11 @@
-import { FormattedOption } from '@/types/quiz';
+import { Difficulty, FormattedOption } from '@/types/quiz';
 import { SelectValue } from 'react-tailwindcss-select/dist/components/type';
 import { create } from 'zustand';
 
 interface DifficultyState {
-  difficulty: FormattedOption;
+  difficulty:   {value: Difficulty | string;  // Тип может быть Difficulty или пустой строкой для "Any Difficulty"
+  label: string;
+};
   changeDifficulty: (newDifficult: FormattedOption | SelectValue) => void;
   resetDifficulty: () => void;
 }

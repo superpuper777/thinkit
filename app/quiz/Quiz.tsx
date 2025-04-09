@@ -9,7 +9,7 @@ import useQuizQuestions from '../hooks/useQuizQuestions';
 import useQuizAnswers from '../hooks/useQuizAnswers';
 import useQuestionIndex from '../hooks/useQuestionIndex';
 import useModal from '../hooks/useModal';
-import { responseObj, calculateResult } from '@/utils';
+import { responseObj, calculateResultForSingleDifficulty, calculateResultForAnyDifficulty } from '@/utils';
 
 const Quiz = () => {
   const [allQuestions, setAllQuestions] = useState(0);
@@ -39,7 +39,11 @@ const Quiz = () => {
   ) => {
     handleAnswer(answer, currentQuestionIndex);
   };
-  const score = calculateResult(totalCorrect, allQuestions);
+  const score = difficulty.value === ''
+    ? calculateResultForAnyDifficulty(totalCorrect, allQuestions, questions, usersAnswers)
+    : calculateResultForSingleDifficulty(totalCorrect, allQuestions, difficulty.value);
+
+  console.log(difficulty.label)
   return (
     <div className="w-full max-w-lg p-[30px] rounded-3xl bg-slate-200 my-8 mx-auto">
       <div className="flex items-start justify-between">

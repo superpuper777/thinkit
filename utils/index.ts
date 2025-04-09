@@ -1,12 +1,14 @@
 import { shuffleArray } from './arrayUtils';
-import { calculateResult } from './calculateResult';
+import { calculateResultForAnyDifficulty } from './calculateResultForAnyDifficulty';
+import { calculateResultForSingleDifficulty } from './calculateResultForSingleDifficulty';
 import { formattedObject } from './formattedOptionsObj';
 import { saveToLocalStorage, getFromLocalStorage } from './localStorage';
 import { responseObj } from './responseCodes';
 
 export {
   shuffleArray,
-  calculateResult,
+  calculateResultForSingleDifficulty,
+  calculateResultForAnyDifficulty,
   formattedObject,
   saveToLocalStorage,
   getFromLocalStorage,
