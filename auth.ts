@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
+const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
 
 if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
     throw new Error("Google Client ID and Secret are required.");
@@ -17,6 +18,7 @@ const authOptions: AuthOptions = {
          authorization: {
             params: {
               prompt: "select_account",
+              redirect_uri: NEXTAUTH_URL + '/api/auth/callback/google',
             },
      }
     }),

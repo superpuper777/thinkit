@@ -22,11 +22,13 @@ const Header = () => {
   return (
     <header className="flex justify-between items-center text-xl font-bold">
       <div className="flex justify-start items-center gap-6">
+      <Link href="/">
         <Image
           className="sm:h-20 sm:w-20 h-10 w-10 rounded-full"
           src={Logo}
           alt="logo"
         />
+        </Link>
         <Link
           href="/statistics"
           className={linkClasses}>
