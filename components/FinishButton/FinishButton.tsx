@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Button from '../Button/Button';
-import useFinishGame from '@/app/hooks/useFinishGame';
+import useFinishGame from '@/hooks/useFinishGame';
 
 type Props = {
   onCloseModal?: () => void;

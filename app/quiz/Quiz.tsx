@@ -5,10 +5,10 @@ import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
 import FinishButton from '@/components/FinishButton/FinishButton';
 import useStore from '@/store/useStore';
-import useQuizQuestions from '../hooks/useQuizQuestions';
-import useQuizAnswers from '../hooks/useQuizAnswers';
-import useQuestionIndex from '../hooks/useQuestionIndex';
-import useModal from '../hooks/useModal';
+import useQuizQuestions from '../../hooks/useQuizQuestions';
+import useQuizAnswers from '../../hooks/useQuizAnswers';
+import useQuestionIndex from '../../hooks/useQuestionIndex';
+import useModal from '../../hooks/useModal';
 import { responseObj, calculateResultForSingleDifficulty, calculateResultForAnyDifficulty } from '@/utils';
 
 const Quiz = () => {
