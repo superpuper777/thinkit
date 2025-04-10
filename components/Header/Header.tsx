@@ -3,6 +3,7 @@ import Logo from '@/assets/logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSession, signOut } from "next-auth/react"
+import ThemeToggle from '../ThemeToggle/ThemeToggle';
 
 const Header = () => {
   const { data: session, } = useSession();
@@ -49,6 +50,7 @@ const Header = () => {
         className={linkClasses}>
         Sign in with Google
       </Link>)}
+      <ThemeToggle />
 
     </header>
   );
