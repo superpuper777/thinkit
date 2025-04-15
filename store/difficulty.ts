@@ -3,7 +3,7 @@ import { SelectValue } from 'react-tailwindcss-select/dist/components/type';
 import { create } from 'zustand';
 
 interface DifficultyState {
-  difficulty:   {value: Difficulty | string;  // Тип может быть Difficulty или пустой строкой для "Any Difficulty"
+  difficulty:   {value: Difficulty | string; 
   label: string;
 };
   changeDifficulty: (newDifficult: FormattedOption | SelectValue) => void;

@@ -13,7 +13,7 @@ const ThemeToggle = () => {
         aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
         className={`
         relative w-14 h-8 flex items-center rounded-full p-1 transition-colors
-        ${theme === 'light' ? 'bg-[#b1b1b1]' : 'bg-[#565557]'}
+        ${theme === 'light' ? 'bg-[#b1b1b1]' : 'bg-[#4d4b4d]'}
         focus:outline-none focus:ring-2 bg-[#dfdfe0]
       `}
       >

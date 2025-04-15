@@ -45,16 +45,16 @@ const Quiz = () => {
 
   console.log(difficulty.label)
   return (
-    <div className="w-full max-w-lg p-[30px] rounded-3xl bg-slate-200 my-8 mx-auto">
+    <div className="w-full dark:text-gray-200 max-w-lg p-[30px] rounded-3xl bg-slate-200 dark:bg-gray-800 my-8 mx-auto">
       <div className="flex items-start justify-between">
         <div>
           <p className="font-bold text-[20px]">
             Score:
-            <span className="text-[#46b5d4] ml-2">{totalCorrect}</span>
-            <span className="text-[#9694aa]">/{allQuestions}</span>
+            <span className="text-[#46b5d4] dark:text-[#56d5f8] ml-2">{totalCorrect}</span>
+            <span className="text-[#9694aa] dark:text-[#b7b1ff]">/{allQuestions}</span>
           </p>
           <p>Your result: {score ? score : 0}</p>
-          <p className="pb-2 font-bold text-base text-[##243c5a]">
+          <p className="pb-2 font-bold text-base">
             Question {currentQuestionIndex + 1} out of {totalQuestions}
           </p>
         </div>

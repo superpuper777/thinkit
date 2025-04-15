@@ -14,7 +14,7 @@ export const getBGColor = (
   if (isAnswerCorrect === false && answer === userAnswer)
     return 'bg-[#AC5050] text-white';
 
-  return 'bg-white text-[#9694aa]';
+  return 'bg-white text-[#9694aa] dark:dark:bg-gray-700 dark:text-gray-200';
 };
 
 export const getDifficultyColor = (difficulty: string) => {

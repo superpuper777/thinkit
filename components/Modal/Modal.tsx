@@ -61,9 +61,9 @@ export default function Modal({
 
   return (
     <div>
-      <TEModal show={showModal} setShow={setShowModal}>
+      <TEModal show={showModal} setShow={setShowModal} className="bg-gray-600 bg-opacity-30">
         <TEModalDialog className="top-60">
-          <TEModalContent>
+          <TEModalContent className="dark:bg-gray-800">
             <TEModalHeader>
               <h4 className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200">
                 Questions are over! Should I continue playing?
