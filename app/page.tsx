@@ -1,8 +1,11 @@
 import { Categories } from "@/types/quiz";
 import Home from "./Home";
 
+
+const apiUrl = process.env.API_URL;
+
 const getCategories = async (): Promise<Categories> => {
-  const endpoint = `https://opentdb.com/api_category.php`;
+  const endpoint = `${apiUrl}api_category.php`;
   const res = await fetch(endpoint);
   if (!res.ok) {
     throw new Error("Failed to fetch data");

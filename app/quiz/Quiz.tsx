@@ -1,5 +1,6 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Spinner from '@/components/Spinner/Spinner';
 import QuestionCard from '@/components/QuestionCard/QuestionCard';
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
@@ -12,6 +13,7 @@ import useModal from '../../hooks/useModal';
 import { responseObj, calculateResultForSingleDifficulty, calculateResultForAnyDifficulty } from '@/utils';
 
 const Quiz = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [allQuestions, setAllQuestions] = useState(0);
   const { category, difficulty, token } = useStore();
   const totalQuestions = 10;
@@ -43,7 +45,12 @@ const Quiz = () => {
     ? calculateResultForAnyDifficulty(totalCorrect, allQuestions, questions, usersAnswers)
     : calculateResultForSingleDifficulty(totalCorrect, allQuestions, difficulty.value);
 
-  console.log(difficulty.label)
+  useEffect(() => {
+    if (questions && questions.length > 0) {
+      setIsLoading(false);
+    }
+  }, [questions]);
+
   return (
     <div className="w-full dark:text-gray-200 max-w-lg p-[30px] rounded-3xl bg-slate-200 dark:bg-gray-800 my-8 mx-auto">
       <div className="flex items-start justify-between">
@@ -60,7 +67,11 @@ const Quiz = () => {
         </div>
         <FinishButton score={score} allQuestions={allQuestions} />
       </div>
-      {responseCode === 0 ? (
+      {isLoading ? (
+        <div className="flex justify-center items-center h-64">
+          <Spinner />
+        </div>
+      ) : responseCode === 0 ? (
         <QuestionCard
           currentQuestionIndex={currentQuestionIndex}
           question={questions[currentQuestionIndex]?.question}
