@@ -29,7 +29,7 @@ const useFinishGame = () => {
 
       if (isNewRecord) {
         toast.success(
-          `Congratulations! New record: ${score} correct answers from ${allQuestions} questions in ${category.label} category using ${difficulty.label} difficulty.`,
+          `Congratulations! New record: ${score} in ${category.label} category using ${difficulty.label} difficulty.`,
           {
             position: 'top-right',
             autoClose: 6000,
