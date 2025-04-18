@@ -12,7 +12,20 @@ import useQuestionIndex from '../../hooks/useQuestionIndex';
 import useModal from '../../hooks/useModal';
 import { responseObj, calculateResultForSingleDifficulty, calculateResultForAnyDifficulty } from '@/utils';
 
-const Quiz = () => {
+interface QuizProps {
+  strapiQuestions: {
+    id: number;
+    attributes: {
+      question: string;
+      correct_answer: string;
+      incorrect_answers: string[];
+      difficulty: 'easy' | 'medium' | 'hard';
+    };
+  }[];
+}
+
+const Quiz = ({ strapiQuestions }: QuizProps) => {
+  console.log(strapiQuestions)
   const [isLoading, setIsLoading] = useState(true);
   const [allQuestions, setAllQuestions] = useState(0);
   const { category, difficulty, token } = useStore();
