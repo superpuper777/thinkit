@@ -2,11 +2,15 @@
   "name": "thinkit",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ws:serve": "ts-node --project tsconfig.server.json socket-server.ts",
+    "ws:dev": "nodemon --exec \"ts-node --project tsconfig.server.json socket-server.ts\"",
+    "dev:all": "concurrently \"npm run dev\" \"npm run ws:dev\""
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -18,21 +22,26 @@
     "react-tailwindcss-select": "^1.8.5",
     "react-toastify": "^11.0.5",
     "sharp": "^0.33.2",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "tw-elements": "^1.1.0",
     "tw-elements-react": "^1.0.0-alpha2",
     "zustand": "^4.5.1"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.19.7",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
     "autoprefixer": "^10.0.1",
+    "concurrently": "^9.2.0",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
+    "nodemon": "^3.1.10",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
