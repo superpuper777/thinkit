@@ -17,7 +17,7 @@ const io = new SocketServer<ClientToServerEvents, ServerToClientEvents>(
   httpServer,
   {
     cors: {
-      origin: "<http://localhost:3000>",
+      origin: "*",//"<http://localhost:3000>",
       methods: ["GET", "POST"]
     }
   }
